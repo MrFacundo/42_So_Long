@@ -10,6 +10,7 @@ SRC 	= srcs/main.c
 OBJ 	= $(SRC:%.c=%.o)
 LFLAGS 	= -L ./minilibx-linux/ -lmlx -L$(INCLIB) -lXext -lX11 -lm -lbsd
 CC		= gcc
+HEADER			= -Iincludes
 RM				= rm -f
 CFLAGS_DEV 		= -g
 CFLAGS_PROD 	= -Wall -Wextra -Werror -g
@@ -25,7 +26,7 @@ GREEN=\033[32m
 # --- RULES ---
 $(NAME): $(OBJ)
 		@echo  "$(GRAY)----Compiling $(NAME)----$(NONE)"
-		$(CC) -o $(NAME) $(OBJ) $(LFLAGS)
+		$(CC) $(HEADER) -o $(NAME) $(OBJ) $(LFLAGS)
 
 show:
 		@printf "NAME	: $(NAME)\n"
