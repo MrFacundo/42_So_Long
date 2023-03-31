@@ -9,4 +9,16 @@ typedef struct window
 	int		width;
 }	t_window;
 
+typedef struct s_img
+{
+	t_window	win;
+	void	*img_ptr;
+	char	*addr;
+	int		height;
+	int		width;
+	int		bpp;
+	int		endian;
+	int		line_len;
+}		t_img;
+
 #endif
