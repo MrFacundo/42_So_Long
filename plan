@@ -1,0 +1,7 @@
+mlc_init
+mlx_new_window
+init lines
+init images
+put images
+moves & put moves
+key hook

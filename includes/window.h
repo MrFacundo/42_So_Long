@@ -1,24 +1,44 @@
 #ifndef WINDOW_H
 # define WINDOW_H
 
-typedef struct window
+typedef struct	s_vector
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	int		height;
-	int		width;
-}	t_window;
+	int	x;
+	int	y;
+}				t_vector;
 
-typedef struct s_img
+typedef struct	s_window {
+	void		*win_ptr;
+	t_vector	size;
+}				t_window;
+
+typedef struct	s_image {
+	void		*img_ptr;
+	t_vector	size;
+	char		*pixels;
+	int			bits_per_pixel;
+	int			line_len;
+	int			endian;
+}				t_image;
+
+typedef struct s_map
 {
-	t_window	win;
-	void	*img_ptr;
-	char	*addr;
-	int		height;
-	int		width;
-	int		bpp;
-	int		endian;
-	int		line_len;
-}		t_img;
+	int		rows;
+	int		cols;
+	int		px;
+	char	**lines;
+}	t_map;
+
+typedef struct	s_program {
+	void		*mlx_ptr;
+	t_window	window;
+	t_map		map;
+	char		**lines;
+	void		*wall;
+	void		*collectable;
+	void		*exit;
+	void		*player;
+}				t_program;
+
 
 #endif
