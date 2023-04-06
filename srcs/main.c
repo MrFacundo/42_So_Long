@@ -94,10 +94,29 @@ void	init_lines(char	*map_file, t_program *program)
 
 void	init_images(t_program *program)
 {
-	program->wall = mlx_xpm_file_to_image(program->mlx_ptr, "png/o.png", &program->map.px, &program->map.px);
-	program->collectable = mlx_xpm_file_to_image(program->mlx_ptr, "png/c1.png", &program->map.px, &program->map.px);
-	program->exit = mlx_xpm_file_to_image(program->mlx_ptr, "png/e.png", &program->map.px, &program->map.px);
-	program->player = mlx_xpm_file_to_image(program->mlx_ptr, "png/p1.png", &program->map.px, &program->map.px);
+	char	*line;
+	int		fd;
+	int	i;
+
+	i= 0;
+	fd = open("xpm/1.xpm", O_RDONLY);
+	while (i++ < 15) {
+		line = ft_get_next_line(fd);
+	}
+	printf("This is the first parameter, a mlx_ptr: %p\n", program->mlx_ptr);
+	printf("The second parameter is a file. File descriptor is not -1, so the file is being opened. Fd: %d\n", fd);
+	printf("I can even print a line from the .xpm file: %s\n", line);
+	printf("The 3rd and 4th parameter, a * int: %d\n", program->map.px);
+	printf("The image pointer I want to use: %p\n", program->wall);
+	program->wall = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/1.xpm", &program->map.px, &program->map.px);
+	program->collectable = 
+	(program->mlx_ptr, "png/plant_01.xpm", &program->map.px, &program->map.px);
+	program->exit = mlx_xpm_file_to_image(program->mlx_ptr, "png/door_01.xpm", &program->map.px, &program->map.px);
+	program->player = mlx_xpm_file_to_image(program->mlx_ptr, "png/player_01.xpm", &program->map.px, &program->map.px);
+
+	printf("The image pointer I want to use :( %p\n", program->wall);
+	printf("The 3rd and 4th parameter hasn't been modified :( %d\n", program->map.px);
+
 }
 
 void	count_rows_and_cols(char *map_file, t_map *map)
@@ -143,7 +162,7 @@ void	init_program(t_program *program)
 {
 	program->mlx_ptr = mlx_init();
 	program->window = new_window(*program, 500, 500, "myWindow");
-	program->map.px = 32;
+	// program->map.px = 32;
 }
 
 int main(int argc, char **argv)

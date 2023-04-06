@@ -26,6 +26,8 @@ typedef struct s_map
 	int		rows;
 	int		cols;
 	int		px;
+	int		a;
+	int		b;
 	char	**lines;
 }	t_map;
 
