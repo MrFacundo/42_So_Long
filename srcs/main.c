@@ -25,27 +25,91 @@ t_window new_window(t_program program, int width, int height, char *name)
 	return (window);
 }
 
+void print_map(t_program *program)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (++i < program->map.rows)
+	{
+		j = -1;
+		while (++j < program->map.cols)
+		{
+			if (program->lines[i][j] == WALL)
+				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->wall_img, j * program->map.px, i * program->map.px);
+			else if (program->lines[i][j] == FLOOR)
+				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->floor_img, j * program->map.px, i * program->map.px);
+			else if (program->lines[i][j] == COLLECTABLE)
+				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->collectable_img, j * program->map.px, i * program->map.px);
+			else if (program->lines[i][j] == EXIT)
+				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->exit_img, j * program->map.px, i * program->map.px);
+			else if (program->lines[i][j] == PLAYER)
+			{
+				program->player.current.x = j;
+				program->player.current.y = i;
+				program->player.attempt.x = j;
+				program->player.attempt.y = i;
+				printf("program->player.current.y -> %d, program->player.current.x-> %d\n", program->player.current.y, program->player.current.x);
+
+				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->player_img, j * program->map.px, i * program->map.px);
+			}
+		}
+	}
+}
+
+void print_lines(t_program *program)
+{
+	int i;
+
+	i = 0;
+	while (program->lines[i])
+	{
+		printf("%s", program->lines[i]);
+		i++;
+	}
+}
+
+void	move(t_program *program)
+{
+	printf("program->lines[program->player.current.y][program->player.current.x]-> %c\n", program->lines[program->player.current.y][program->player.current.x]);
+	print_lines(program);
+	program->lines[program->player.current.y][program->player.current.x] = FLOOR;
+	program->lines[program->player.attempt.y][program->player.attempt.x] = PLAYER;
+	print_lines(program);
+
+	mlx_clear_window(program->mlx_ptr, &program->window);
+	print_map(program);
+}
+
 int	handle_key(int keycode, t_program *program)
 {
-
 	if (keycode == ESC)
 		exit_program(program);
 	else if (keycode == LEFT)
 		program->player.attempt.x = program->player.current.x - 1;
 	else if (keycode == RIGHT)
+	{
+		printf("program->player.current.x  -> %d\n", program->player.current.x);
+		printf("program->player.current.y  -> %d\n", program->player.current.y);
+		printf("program->player.attempt.x  -> %d\n", program->player.attempt.x);
+		printf("program->player.attempt.y  -> %d\n", program->player.attempt.y);
+
 		program->player.attempt.x = program->player.current.x + 1;
+	}
 	else if (keycode == DOWN)
 		program->player.attempt.y = program->player.current.y + 1;
 	else if (keycode == UP)
 		program->player.attempt.y = program->player.current.y - 1;
-	if (program->lines[program->player.attempt.y][program->player.attempt.x] != '1')
+	else
+		return (0);
+	if (program->lines[program->player.attempt.y][program->player.attempt.x] != WALL)
 		move(program);
 	else
 	{
 		program->player.attempt.x = program->player.current.x;
 		program->player.attempt.y = program->player.current.y;
 	}
-	printf("Keycode pressed -> %d\n", keycode);
 	return (0);
 }
 
@@ -67,8 +131,6 @@ void init_lines(char *map_file, t_program *program)
 	}
 	lines[i] = 0;
 	program->lines = lines;
-	printf("lines amount: %d\n", i);
-	printf("first line: %s\n", program->lines[0]);
 }
 
 void init_images(t_program *program)
@@ -77,18 +139,12 @@ void init_images(t_program *program)
 	int fd;
 	int i;
 
-	program->floor = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/floor.xpm", &program->map.px, &program->map.px);
-	program->wall = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/wall.xpm", &program->map.px, &program->map.px);
-	program->collectable = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/collectable.xpm", &program->map.px, &program->map.px);
-	program->exit = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/exit.xpm", &program->map.px, &program->map.px);
-	program->player = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/player.xpm", &program->map.px, &program->map.px);
+	program->floor_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/floor.xpm", &program->map.px, &program->map.px);
+	program->wall_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/wall.xpm", &program->map.px, &program->map.px);
+	program->collectable_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/collectable.xpm", &program->map.px, &program->map.px);
+	program->exit_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/exit.xpm", &program->map.px, &program->map.px);
+	program->player_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/player.xpm", &program->map.px, &program->map.px);
 
-	printf("program->map.px %d\n", program->map.px);
-	printf("program->floor %p\n", program->floor);
-	printf("program->wall %p\n", program->wall);
-	printf("program->collectable %p\n", program->collectable);
-	printf("program->exit %p\n", program->exit);
-	printf("program->player %p\n", program->player);
 }
 
 void count_rows_and_cols(char *map_file, t_map *map)
@@ -106,32 +162,6 @@ void count_rows_and_cols(char *map_file, t_map *map)
 		i++;
 	}
 	map->rows = i;
-	printf("rows: %d\n", map->rows);
-	printf("cols: %d\n", map->cols);
-}
-
-void print_map(t_program *program)
-{
-	int i;
-	int j;
-
-	i = -1;
-	while (++i < program->map.rows)
-	{
-		j = -1;
-		while (++j < program->map.cols)
-		{
-			if (program->lines[i][j] == '1')
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->wall, j * program->map.px, i * program->map.px);
-			else if (program->lines[i][j] == '0')
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->floor, j * program->map.px, i * program->map.px);
-			else if (program->lines[i][j] == 'C')
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->collectable, j * program->map.px, i * program->map.px);
-			else if (program->lines[i][j] == 'E')
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->exit, j * program->map.px, i * program->map.px);
-			else if (program->lines[i][j] == 'P')
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->player, j * program->map.px, i * program->map.px);		}
-	}
 }
 
 void init_program(t_program *program)

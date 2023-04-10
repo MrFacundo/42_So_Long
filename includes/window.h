@@ -1,12 +1,17 @@
 #ifndef WINDOW_H
 # define WINDOW_H
 
-# define BUFFER_SIZE 42
-# define ESC 53
-# define LEFT 0
-# define RIGHT 2
-# define DOWN 1
-# define UP 13
+# define ESC 65307
+# define LEFT 97
+# define RIGHT 100
+# define UP 119
+# define DOWN 115
+
+# define FLOOR '0'
+# define WALL '1'
+# define COLLECTABLE 'C'
+# define EXIT 'E'
+# define PLAYER 'P'
 typedef struct	s_vector
 {
 	int	x;
@@ -38,7 +43,7 @@ typedef struct s_map
 }	t_map;
 typedef struct s_player
 {
-	int			c;
+	int			collectable;
 	int			moves;
 	t_vector	attempt;
 	t_vector	current;
@@ -49,10 +54,11 @@ typedef struct	s_program {
 	t_window	window;
 	t_map		map;
 	char		**lines;
-	void		*floor;
-	void		*wall;
-	void		*collectable;
-	void		*exit;
+	void		*floor_img;
+	void		*wall_img;
+	void		*collectable_img;
+	void		*exit_img;
+	void		*player_img;
 	t_player	player;
 }				t_program;
 

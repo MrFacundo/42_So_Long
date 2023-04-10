@@ -5,3 +5,6 @@ init images
 put images
 moves & put moves
 key hook
+
+
+git submodule update --init
