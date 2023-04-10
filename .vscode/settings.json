@@ -2,6 +2,7 @@
 	"files.associations": {
 		"*.css": "tailwindcss",
 		"*.js": "javascriptreact",
-		"mlx.h": "c"
+		"mlx.h": "c",
+		"window.h": "c"
 	}
 }

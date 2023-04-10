@@ -1,6 +1,12 @@
 #ifndef WINDOW_H
 # define WINDOW_H
 
+# define BUFFER_SIZE 42
+# define ESC 53
+# define LEFT 0
+# define RIGHT 2
+# define DOWN 1
+# define UP 13
 typedef struct	s_vector
 {
 	int	x;
@@ -30,16 +36,24 @@ typedef struct s_map
 	int		b;
 	char	**lines;
 }	t_map;
+typedef struct s_player
+{
+	int			c;
+	int			moves;
+	t_vector	attempt;
+	t_vector	current;
+}	t_player;
 
 typedef struct	s_program {
 	void		*mlx_ptr;
 	t_window	window;
 	t_map		map;
 	char		**lines;
+	void		*floor;
 	void		*wall;
 	void		*collectable;
 	void		*exit;
-	void		*player;
+	t_player	player;
 }				t_program;
 
 
