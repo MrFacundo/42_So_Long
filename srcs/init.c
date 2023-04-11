@@ -2,14 +2,14 @@
 #include "../libft/libft.h"
 #include "../includes/window.h"
 
-void count_rows_and_cols(char *map_file, t_map *map)
+void count_rows_and_cols(char *map_file_path, t_map *map)
 {
 	int i;
 	char *line;
 	int fd;
 
 	i = 1;
-	fd = open(map_file, O_RDONLY);
+	fd = open(map_file_path, O_RDONLY);
 	while (ft_get_next_line(fd))
 	{
 		if (i == 1)

@@ -26,6 +26,8 @@ void	move(t_program *program)
 
 int	handle_key(int keycode, t_program *program)
 {
+
+	printf("keycode %d \n", keycode);
 	if (keycode == ESC)
 		exit_program(program);
 	else if (keycode == LEFT)
@@ -53,6 +55,8 @@ int main(int argc, char **argv)
 {
 	t_program program;
 
+	if (!validate_arg(argc, argv[1]))
+		return (0);
 	count_rows_and_cols(argv[1], &program.map);
 	init_program(&program);
 	init_lines(argv[1], &program);

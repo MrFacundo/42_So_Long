@@ -5,6 +5,7 @@
 #include <stdio.h>	// printf
 #include <stdlib.h> // malloc, exit
 #include <fcntl.h>	// O_RDONLY
+/*#include <keysymdef.h>*/
 
 # define ESC 65307
 # define LEFT 97
@@ -69,7 +70,6 @@ typedef struct	s_program {
 
 // main.c
 int			exit_program(t_program *program);
-void		print_map(t_program *program);
 int			main(int argc, char **argv);
 
 // init.c
@@ -78,5 +78,14 @@ t_window	init_window(t_program program, char *name);
 void		init_program(t_program *program);
 void		init_lines(char *map_file, t_program *program);
 void		init_images(t_program *program);
+
+// render.c
+void	render_map(t_program *program);
+void 	print_lines(t_program *program);
+void 	render_counters(t_program *program);
+
+// validation.c
+int extension_is_valid(char *map_file_path);
+int validate_arg(int argc, char *argv);
 
 #endif
