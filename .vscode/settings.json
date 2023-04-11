@@ -3,6 +3,7 @@
 		"*.css": "tailwindcss",
 		"*.js": "javascriptreact",
 		"mlx.h": "c",
-		"window.h": "c"
+		"window.h": "c",
+		"libft.h": "c"
 	}
 }

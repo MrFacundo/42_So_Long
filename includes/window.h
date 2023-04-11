@@ -1,6 +1,11 @@
 #ifndef WINDOW_H
 # define WINDOW_H
 
+#include <unistd.h>
+#include <stdio.h>	// printf
+#include <stdlib.h> // malloc, exit
+#include <fcntl.h>	// O_RDONLY
+
 # define ESC 65307
 # define LEFT 97
 # define RIGHT 100
@@ -62,5 +67,16 @@ typedef struct	s_program {
 	t_player	player;
 }				t_program;
 
+// main.c
+int			exit_program(t_program *program);
+void		print_map(t_program *program);
+int			main(int argc, char **argv);
+
+// init.c
+void		count_rows_and_cols(char *map_file, t_map *map);
+t_window	init_window(t_program program, char *name);
+void		init_program(t_program *program);
+void		init_lines(char *map_file, t_program *program);
+void		init_images(t_program *program);
 
 #endif

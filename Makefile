@@ -1,5 +1,5 @@
 NAME 			= so_long
-SOURCES 		=  ./srcs/main.c
+SOURCES 		=  ./srcs/main.c ./srcs/init.c ./srcs/render.c
 OBJECTS 		= $(SOURCES:.c=.o)
 HEADER			= -Iincludes
 LIBFT_DIR		= ./libft
@@ -52,6 +52,9 @@ show:
 		@printf "LFLAGS	: $(LFLAGS)\n"
 		@printf "SRC	: $(SRC)\n"
 		@printf "OBJ	: $(OBJ)\n"
+
+restart: all
+		./so_long maps/map_1.ber
 
 re: fclean all
 
