@@ -16,10 +16,12 @@ t_window init_window(t_program program, char *name)
 
 void init_program(t_program *program)
 {
+	program->window.win_ptr = 0;
 	program->map.diff = 0;
 	program->map.collectable_count = 0;
 	program->map.exit_count = 0;
 	program->map.player_count = 0;
+	program->map.invalid_char = 0;
 	program->map.px = 32;
 	program->player.collectable = 0;
 	program->player.moves = 0;
@@ -38,10 +40,11 @@ void init_lines(char *map_file, t_program *program)
 	while (line)
 	{
 		lines[i++] = line;
-		line = ft_get_next_line(fd); // in condition to shorter
+		line = ft_get_next_line(fd); // in condition to shorten
 	}
 	lines[i] = 0;
 	program->lines = lines;
+	print_lines(program);
 }
 
 void init_images(t_program *program)

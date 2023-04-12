@@ -6,7 +6,8 @@ int exit_program(t_program *program, char *message)
 {
 	printf("%s\n", message);
 	printf("closing...");
-	mlx_destroy_window(program->mlx_ptr, program->window.win_ptr);
+	if (program->window.win_ptr)
+		mlx_destroy_window(program->mlx_ptr, program->window.win_ptr);
 	exit(0);
 }
 
@@ -51,7 +52,6 @@ int	handle_key(int keycode, t_program *program)
 	return (0);
 }
 
-32
 int main(int argc, char **argv)
 {
 	t_program program;

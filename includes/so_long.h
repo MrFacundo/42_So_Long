@@ -48,6 +48,7 @@ typedef struct s_map
 	int		collectable_count;
 	int		exit_count;
 	int		player_count;
+	int		invalid_char;
 }	t_map;
 
 typedef struct s_player
