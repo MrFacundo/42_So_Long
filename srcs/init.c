@@ -1,31 +1,12 @@
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
-#include "../includes/window.h"
-
-void count_rows_and_cols(char *map_file_path, t_map *map)
-{
-	int i;
-	char *line;
-	int fd;
-
-	i = 1;
-	fd = open(map_file_path, O_RDONLY);
-	while (ft_get_next_line(fd))
-	{
-		if (i == 1)
-			map->cols = ft_strlen(ft_get_next_line(fd));
-		i++;
-	}
-	map->rows = i;
-}
+#include "../includes/so_long.h"
 
 t_window init_window(t_program program, char *name)
 {
 	t_window window;
 	int width;
 	int height;
-	printf("program.map.cols %d\n", program.map.cols);
-	printf("program.map.rows %d\n", program.map.rows);
 	window.size.x = program.map.cols * program.map.px;
 	window.size.y = program.map.rows * program.map.px;
 	window.win_ptr = mlx_new_window(program.mlx_ptr, window.size.x, window.size.y, name);
@@ -35,9 +16,11 @@ t_window init_window(t_program program, char *name)
 
 void init_program(t_program *program)
 {
-	program->mlx_ptr = mlx_init();
+	program->map.diff = 0;
+	program->map.collectable_count = 0;
+	program->map.exit_count = 0;
+	program->map.player_count = 0;
 	program->map.px = 32;
-	program->window = init_window(*program, "So Long");
 	program->player.collectable = 0;
 	program->player.moves = 0;
 }

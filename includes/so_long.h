@@ -43,10 +43,13 @@ typedef struct s_map
 	int		rows;
 	int		cols;
 	int		px;
-	int		a;
-	int		b;
 	char	**lines;
+	int		diff;
+	int		collectable_count;
+	int		exit_count;
+	int		player_count;
 }	t_map;
+
 typedef struct s_player
 {
 	int			collectable;
@@ -69,7 +72,7 @@ typedef struct	s_program {
 }				t_program;
 
 // main.c
-int			exit_program(t_program *program);
+int			exit_program(t_program *program, char	*message);
 int			main(int argc, char **argv);
 
 // init.c
@@ -86,6 +89,7 @@ void 	render_counters(t_program *program);
 
 // validation.c
 int extension_is_valid(char *map_file_path);
-int validate_arg(int argc, char *argv);
+int validate_arg(int argc, char *argv, t_program *program);
+int map_is_valid(char *map_file_path, t_program *program);
 
 #endif

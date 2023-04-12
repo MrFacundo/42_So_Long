@@ -1,10 +1,11 @@
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
-#include "../includes/window.h"
+#include "../includes/so_long.h"
 
-int exit_program(t_program *program)
+int exit_program(t_program *program, char *message)
 {
-	printf("closing");
+	printf("%s\n", message);
+	printf("closing...");
 	mlx_destroy_window(program->mlx_ptr, program->window.win_ptr);
 	exit(0);
 }
@@ -15,7 +16,7 @@ void	move(t_program *program)
 	if (program->lines[program->player.attempt.y][program->player.attempt.x] == COLLECTABLE)
 		program->player.collectable += 1;
 	else if (program->lines[program->player.attempt.y][program->player.attempt.x] == EXIT)
-		exit_program(program);
+		exit_program(program, "You win!");
 	program->player.moves += 1;
 	program->lines[program->player.current.y][program->player.current.x] = FLOOR;
 	program->lines[program->player.attempt.y][program->player.attempt.x] = PLAYER;
@@ -29,7 +30,7 @@ int	handle_key(int keycode, t_program *program)
 
 	printf("keycode %d \n", keycode);
 	if (keycode == ESC)
-		exit_program(program);
+		exit_program(program, "You quit the game!");
 	else if (keycode == LEFT)
 		program->player.attempt.x = program->player.current.x - 1;
 	else if (keycode == RIGHT)
@@ -55,10 +56,11 @@ int main(int argc, char **argv)
 {
 	t_program program;
 
-	if (!validate_arg(argc, argv[1]))
-		return (0);
-	count_rows_and_cols(argv[1], &program.map);
 	init_program(&program);
+	if (!validate_arg(argc, argv[1], &program))
+		return (0);
+	program.mlx_ptr = mlx_init();
+	program.window = init_window(program, "So Long");
 	init_lines(argv[1], &program);
 	init_images(&program);
 	render_map(&program);

@@ -4,6 +4,7 @@
 		"*.js": "javascriptreact",
 		"mlx.h": "c",
 		"window.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"so_long.h": "c"
 	}
 }

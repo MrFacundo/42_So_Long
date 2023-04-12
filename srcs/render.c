@@ -1,6 +1,6 @@
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
-#include "../includes/window.h"
+#include "../includes/so_long.h"
 
 void render_map(t_program *program)
 {
