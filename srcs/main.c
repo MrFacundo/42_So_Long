@@ -51,7 +51,7 @@ int	handle_key(int keycode, t_program *program)
 	return (0);
 }
 
-
+32
 int main(int argc, char **argv)
 {
 	t_program program;
