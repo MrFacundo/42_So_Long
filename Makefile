@@ -1,5 +1,5 @@
 NAME 			= so_long
-SOURCES 		=  ./srcs/main.c ./srcs/init.c ./srcs/render.c ./srcs/validation.c
+SOURCES 		=  ./srcs/main.c ./srcs/init.c ./srcs/render.c ./srcs/validation.c ./srcs/debug.c
 OBJECTS 		= $(SOURCES:.c=.o)
 HEADER			= -Iincludes
 LIBFT_DIR		= ./libft

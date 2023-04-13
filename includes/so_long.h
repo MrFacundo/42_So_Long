@@ -28,27 +28,17 @@ typedef struct	s_window {
 	void		*win_ptr;
 	t_vector	size;
 }				t_window;
-
-typedef struct	s_image {
-	void		*img_ptr;
-	t_vector	size;
-	char		*pixels;
-	int			bits_per_pixel;
-	int			line_len;
-	int			endian;
-}				t_image;
-
 typedef struct s_map
 {
 	int		rows;
 	int		cols;
 	int		px;
-	char	**lines;
 	int		diff;
 	int		collectable_count;
 	int		exit_count;
 	int		player_count;
 	int		invalid_char;
+	int		invalid_limits;
 }	t_map;
 
 typedef struct s_player
@@ -89,8 +79,12 @@ void 	print_lines(t_program *program);
 void 	render_counters(t_program *program);
 
 // validation.c
+void validate_arg(int argc, char *argv, t_program *program);
 int extension_is_valid(char *map_file_path);
-int validate_arg(int argc, char *argv, t_program *program);
 int map_is_valid(char *map_file_path, t_program *program);
+
+// debug.c
+void 	print_lines(t_program *program);
+void	print_map_validation(t_program *program);
 
 #endif

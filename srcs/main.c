@@ -57,8 +57,7 @@ int main(int argc, char **argv)
 	t_program program;
 
 	init_program(&program);
-	if (!validate_arg(argc, argv[1], &program))
-		return (0);
+	validate_arg(argc, argv[1], &program);
 	program.mlx_ptr = mlx_init();
 	program.window = init_window(program, "So Long");
 	init_lines(argv[1], &program);
