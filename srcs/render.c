@@ -44,4 +44,4 @@ void render_counters(t_program *program)
 	mlx_string_put(program->mlx_ptr, program->window.win_ptr, program->window.size.x - 12, 24, 0x00fffe00, collectable_count);
 	free(move_count);
 	free(collectable_count);
-}
+}	

@@ -4,8 +4,18 @@
 
 int exit_program(t_program *program, char *message)
 {
+	char **tmp;
+	
 	printf("%s\n", message);
 	printf("closing...");
+	if (program->lines)
+	{
+		tmp = program->lines;
+		while (*tmp)
+			free(*tmp++);
+		free(program->lines);
+		program->lines = 0;
+	}
 	if (program->window.win_ptr)
 		mlx_destroy_window(program->mlx_ptr, program->window.win_ptr);
 	exit(0);

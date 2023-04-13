@@ -18,6 +18,7 @@ void init_program(t_program *program)
 {
 	program->window.win_ptr = 0;
 	program->px = 32;
+	program->lines = 0;
 	program->map.diff = 0;
 	program->map.collectable_count = 0;
 	program->map.exit_count = 0;

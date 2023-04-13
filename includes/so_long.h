@@ -32,7 +32,6 @@ typedef struct s_map
 {
 	int		rows;
 	int		cols;
-	int		px;
 	int		diff;
 	int		collectable_count;
 	int		exit_count;
@@ -51,6 +50,7 @@ typedef struct s_player
 
 typedef struct	s_program {
 	void		*mlx_ptr;
+	int				px;
 	t_window	window;
 	t_map		map;
 	char		**lines;
