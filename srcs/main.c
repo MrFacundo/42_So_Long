@@ -31,7 +31,7 @@ void	handle_error(t_program *program, char *message)
 
 void	move(t_program *program)
 {	
-	print_lines(program);
+	print_lines(program->lines);
 	if (program->lines[program->player.attempt.y][program->player.attempt.x] == COLLECTABLE)
 		program->player.collectable += 1;
 	else if (program->lines[program->player.attempt.y][program->player.attempt.x] == EXIT)
