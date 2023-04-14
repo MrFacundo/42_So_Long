@@ -36,9 +36,11 @@ void init_lines(char *map_file, t_program *program)
 	int fd;
 
 	fd = open(map_file, O_RDONLY);
+	if (fd == -1)
+		handle_error(program, strerror(errno));
 	lines = ft_calloc(program->map.rows + 1, sizeof(char *));
 	if (!lines)
-		exit_program(program, "Malloc failed.");
+		handle_error(program, MALLOC_ERROR);
 	i = 0;
 	while (lines[i++] = ft_get_next_line(fd));
 	program->lines = lines;

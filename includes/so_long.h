@@ -5,6 +5,8 @@
 #include <stdio.h>	// printf
 #include <stdlib.h> // malloc, exit
 #include <fcntl.h>	// O_RDONLY
+#include <errno.h>	// errno
+#include <string.h> // strerror
 /*#include <keysymdef.h>*/
 
 # define ESC 65307
@@ -18,6 +20,14 @@
 # define COLLECTABLE 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
+
+# define BAD_ARGS "Bad args m8"
+# define BAD_EXTENSION "Bad extension m8"
+# define BAD_ELEMENTS "One player, one exit, at least one collectable m8"
+# define MALLOC_ERROR "Malloc error m8"
+# define MAP_SHAPE "Map's weird wtf"
+# define MAP_CHAR "Strange chars in map m8"
+# define MAP_LIMITS "Walls are all wrong m8"
 typedef struct	s_vector
 {
 	int	x;
@@ -50,7 +60,7 @@ typedef struct s_player
 
 typedef struct	s_program {
 	void		*mlx_ptr;
-	int				px;
+	int			px;
 	t_window	window;
 	t_map		map;
 	char		**lines;
@@ -63,7 +73,8 @@ typedef struct	s_program {
 }				t_program;
 
 // main.c
-int			exit_program(t_program *program, char	*message);
+void		handle_error(t_program *program, char *message);
+int			exit_program(t_program *program);
 int			main(int argc, char **argv);
 
 // init.c

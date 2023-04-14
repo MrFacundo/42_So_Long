@@ -2,79 +2,70 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-int	char_count(char *str, int c)
-{
-	int count;
-
-	count = 0;
-	while (*str)
-		if (*str++ == c)
-			count++;
-	return (count);
-}
-
-void	check_characters(char *line, t_program *program)
+void	check_characters(char *row, int row_number, t_program *program)
 {
 	int i;
 
 	i = 0;
-	while (line[i])
+	while (row[i])
 	{
-		if (line[i] == 'C')
+		if (row[i] == 'C')
 			program->map.collectable_count++;
-		else if (line[i] == 'E')
+		else if (row[i] == 'E')
 			program->map.exit_count++;
-		else if (line[i] == 'P')
+		else if (row[i] == 'P')
+		{
+			
 			program->map.player_count++;
-		else if (line[i] == '0' || line[i] == '1' || line[i] == '\n')
+		}
+		else if (row[i] == '0' || row[i] == '1' || row[i] == '\n')
 			;
 		else
 		{
-			printf("Invalid character: %c\n", line[i]);
+			printf("Invalid character: %c\n", row[i]);
 			program->map.invalid_char = 1;
 		}
 		i++;
 	}
 }
 
-void	check_length(char *line, int line_number, t_program *program)
+void	check_length(char *row, int row_number, t_program *program)
 {
 	int has_newline;
-	int line_length;
+	int cols;
 
-	has_newline = ft_strchr(line, '\n') ? 1 : 0;
-	line_length = (int)ft_strlen(line) - has_newline;
-	if (line_number == 1)
-		program->map.cols = line_length;
-	else if (line_length != program->map.cols)
+	has_newline = ft_strchr(row, '\n') ? 1 : 0;
+	cols = (int)ft_strlen(row) - has_newline;
+	if (row_number == 1)
+		program->map.cols = cols;
+	else if (cols != program->map.cols)
 		program->map.diff = 1;
 }
 
-void check_limits(char *line, int line_number, t_program *program)
+void check_limits(char *row, int row_number, t_program *program)
 {
-	if (line_number == 1 || line_number == program->map.rows)
-		while (*line)
+	if (row_number == 1 || row_number == program->map.rows)
+		while (*row)
 		{
-			if (*line != WALL && *line != '\n')
-			{
-				printf("*line: %c\n", *line);
+			if (*row != WALL && *row != '\n')
 				program->map.invalid_limits = 1;
-			}
-			line++;
+			row++;
 		}
-	else if (line[0] != WALL || line[program->map.cols - 1] != WALL && line[program->map.cols - 1] != '\n')
-	{
-		printf("line[0]: %c\n", line[0]);
-		printf("line[program->map.cols - 1]: %c\n", line[program->map.cols - 1]);
+	else if (row[0] != WALL || row[program->map.cols - 1] != WALL && row[program->map.cols - 1] != '\n')
 		program->map.invalid_limits = 1;
-	}
 }
 
-void check_map_line(char *line, int line_number, t_program *program)
+void check_row(char *row, int row_number, t_program *program)
 {
-    check_length(line, line_number, program);
-    check_characters(line, program);
-    check_limits(line, line_number, program);
+    check_length(row, row_number, program);
+	if (program->map.diff)
+		handle_error(program, MAP_SHAPE);
+    check_characters(row, row_number, program);
+	if (program->map.invalid_char)
+		handle_error(program, MAP_CHAR);
+    check_limits(row, row_number, program);
+	if (program->map.invalid_limits)
+		handle_error(program, MAP_LIMITS);
 }
 
 
@@ -84,6 +75,8 @@ int map_is_valid(char *map_file_path, t_program *program)
     char *line;
 
     fd = open(map_file_path, O_RDONLY);
+	if (fd == -1)
+		handle_error(program, strerror(errno));
     while (line = ft_get_next_line(fd))
     {
         free(line);
@@ -91,18 +84,17 @@ int map_is_valid(char *map_file_path, t_program *program)
     }
     close(fd);
     fd = open(map_file_path, O_RDONLY);
+	if (fd == -1)
+		handle_error(program, strerror(errno));
     i = 1;
     while (line = ft_get_next_line(fd))
 	{
-		check_map_line(line, i++, program);
+		check_row(line, i++, program);
 		free(line);
 	}
     close(fd);
     print_map_validation(program);
-    if (program->map.diff ||
-        program->map.invalid_char ||
-        program->map.invalid_limits ||
-        !program->map.collectable_count ||
+    if (!program->map.collectable_count ||
         !program->map.exit_count ||
         program->map.player_count != 1)
         return (0);
@@ -115,7 +107,7 @@ int extension_is_valid(char *map_file_path)
 
 	extension = ft_strrchr(map_file_path, '.');
 	printf("extension: %s\n", extension);
-	if (ft_strncmp(extension, ".ber", ft_strlen(extension)))
+	if (ft_strncmp(extension, ".ber", 4 ))
 		return (0);
 	return (1);
 }
@@ -123,9 +115,9 @@ int extension_is_valid(char *map_file_path)
 void validate_arg(int argc, char *argv, t_program *program)
 {
 	if (argc != 2)
-		exit_program(program, "bad args m8");
+		handle_error(program, BAD_ARGS);
 	if (!extension_is_valid(argv))
-		exit_program(program, "bad extension m8");
+		handle_error(program, BAD_EXTENSION);
 	if (!map_is_valid(argv, program))
-		exit_program(program, "invalid map m8");
+		handle_error(program, BAD_ELEMENTS);
 }

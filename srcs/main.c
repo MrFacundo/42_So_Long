@@ -2,11 +2,10 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-int exit_program(t_program *program, char *message)
+int exit_program(t_program *program)
 {
 	char **tmp;
 	
-	printf("%s\n", message);
 	printf("closing...");
 	if (program->lines)
 	{
@@ -21,13 +20,22 @@ int exit_program(t_program *program, char *message)
 	exit(0);
 }
 
+void	handle_error(t_program *program, char *message)
+{
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(message, 2);
+	ft_putchar_fd('\n', 2);
+	exit_program(program);
+}
+
+
 void	move(t_program *program)
 {	
 	print_lines(program);
 	if (program->lines[program->player.attempt.y][program->player.attempt.x] == COLLECTABLE)
 		program->player.collectable += 1;
 	else if (program->lines[program->player.attempt.y][program->player.attempt.x] == EXIT)
-		exit_program(program, "You win!");
+		exit_program(program);
 	program->player.moves += 1;
 	program->lines[program->player.current.y][program->player.current.x] = FLOOR;
 	program->lines[program->player.attempt.y][program->player.attempt.x] = PLAYER;
@@ -41,7 +49,7 @@ int	handle_key(int keycode, t_program *program)
 
 	printf("keycode %d \n", keycode);
 	if (keycode == ESC)
-		exit_program(program, "You quit the game!");
+		exit_program(program);
 	else if (keycode == LEFT)
 		program->player.attempt.x = program->player.current.x - 1;
 	else if (keycode == RIGHT)
@@ -68,9 +76,9 @@ int main(int argc, char **argv)
 
 	init_program(&program);
 	validate_arg(argc, argv[1], &program);
+	init_lines(argv[1], &program);
 	program.mlx_ptr = mlx_init();
 	program.window = init_window(program, "So Long");
-	init_lines(argv[1], &program);
 	init_images(&program);
 	render_map(&program);
 	mlx_key_hook(program.window.win_ptr, handle_key, &program);
