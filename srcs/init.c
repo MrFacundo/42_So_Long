@@ -29,7 +29,7 @@ void init_program(t_program *program)
 	program->player.moves = 0;
 }
 
-void init_lines(char *map_file, t_program *program)
+void init_lines(char *map_file, t_program *program, char ***lines_ptr)
 {
 	char **lines;
 	int i;
@@ -43,8 +43,9 @@ void init_lines(char *map_file, t_program *program)
 		handle_error(program, MALLOC_ERROR);
 	i = 0;
 	while (lines[i++] = ft_get_next_line(fd));
-	program->lines = lines;
-	print_lines(program);
+	close(fd);
+	*lines_ptr = lines;
+	print_lines(*lines_ptr);
 }
 
 void init_images(t_program *program)

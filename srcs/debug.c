@@ -2,13 +2,13 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-void print_lines(t_program *program)
+void print_lines(char **lines_ptr)
 {
 	int i;
 
 	i = 0;
-    while (program->lines[i])
-        printf("%s", program->lines[i++]);
+    while (lines_ptr[i])
+        printf("%s", lines_ptr[i++]);
 	printf("\n\n");
 }
 

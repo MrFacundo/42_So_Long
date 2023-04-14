@@ -14,7 +14,10 @@ void render_map(t_program *program)
 		while (++j < program->map.cols)
 		{
 			if (program->lines[i][j] == WALL)
+			{	
+				
 				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->wall_img, j * program->px, i * program->px);
+			}
 			else if (program->lines[i][j] == FLOOR)
 				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->floor_img, j * program->px, i * program->px);
 			else if (program->lines[i][j] == COLLECTABLE)

@@ -46,8 +46,6 @@ void	move(t_program *program)
 
 int	handle_key(int keycode, t_program *program)
 {
-
-	printf("keycode %d \n", keycode);
 	if (keycode == ESC)
 		exit_program(program);
 	else if (keycode == LEFT)
@@ -76,7 +74,6 @@ int main(int argc, char **argv)
 
 	init_program(&program);
 	validate_arg(argc, argv[1], &program);
-	init_lines(argv[1], &program);
 	program.mlx_ptr = mlx_init();
 	program.window = init_window(program, "So Long");
 	init_images(&program);
