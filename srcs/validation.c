@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 13:59:24 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/17 23:16:12 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ void	validate_arg(int argc, char *argv, t_game *game)
 		handle_error(game, BAD_ELEMENTS);
 	init_table(argv, game, &game->table);
 	init_table(argv, game, &game->table_copy);
+	game->table_copy2 = copy_table(game);
+
 	if (!paths_are_valid(game))
 		handle_error(game, BAD_PATH);
 }
+
