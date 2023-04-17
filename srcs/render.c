@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:12 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 17:37:22 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/17 18:26:26 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ void	render_counters(t_game *g)
 	char	*move_count;
 	char	*collectable_count;
 	char	(*f)(void *, void *, int x, int y, int color, char *str);
-	char	*color;
+	int	color;
 	int		x;
 
 	f = mlx_string_put;
-	color = "0x008fce00";
+	color = 0x008fce00;
 	x = g->window.size.x - 12;
 	move_count = ft_itoa(g->player.moves);
 	collectable_count = ft_itoa(g->player.collectable);

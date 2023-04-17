@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 17:54:01 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:07:02 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	int			collectable;
+	int			collected;
 	int			moves;
 	t_vector	attempt;
 	t_vector	current;
@@ -117,11 +117,13 @@ typedef struct s_game
 // main.c
 void		handle_error(t_game *program, char *message);
 int			main(int argc, char **argv);
+void		init_game(t_game *game);
+int			handle_key(int keycode, t_game *game);
 
 // init.c
 void		count_rows_and_cols(char *map_file, t_map *map);
 t_window	init_window(t_game program, char *name);
-void		init_game(t_game *program);
+void		init_program(t_game *program);
 void		init_images(t_game *program);
 
 // render.c

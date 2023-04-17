@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 17:20:12 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:01:49 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_window	init_window(t_game game, char *name)
 	return (window);
 }
 
-void	init_game(t_game *game)
+void	init_program(t_game *game)
 {
 	game->window.win_ptr = 0;
 	game->px = 32;
@@ -36,12 +36,9 @@ void	init_game(t_game *game)
 	game->map.diff = 0;
 	game->map.collectable_count = 0;
 	game->map.exit_count = 0;
-	game->map.player_count = 0;
 	game->map.invalid_char = 0;
 	game->map.invalid_limits = 0;
-	game->player.collectable = 0;
-	game->player.moves = 0;
-	game->game_over = 0;
+
 }
 
 void	init_table(char *map_file, t_game *game, char ***table_ptr)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_over.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:23:36 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 17:58:53 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:17:11 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,27 @@ int	**new_table(int rows, int cols, char c, t_game *game)
 void	render_game_over_message(t_game *g)
 {
 	char	(*f)(void *, void *, int x, int y, int color, char *str);
-	char	*color;
+	int	color;
 	int		x;
 	int		y;
 	char	*message;
 
 	g->game_over = 1;
+	mlx_clear_window(g->mlx_ptr, g->window.win_ptr);
+	if (g->player.collected == g->map.collectable_count)
+		message = "You win!";
+	else
+		message = "Game Over";
 	f = mlx_string_put;
-	color = "0x008fce00";
+	color = 0x008fce00;
 	x = g->window.size.x /2;
 	y = g->window.size.y /2;
-	message = "Game Over!";
 	f(g->mlx_ptr, g->window.win_ptr, x, y, color, message);
+}
+
+void	reset_game(t_game *game)
+{
+	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
+	//init_table(argv, game, &game->table);
+	init_game(game);
 }
