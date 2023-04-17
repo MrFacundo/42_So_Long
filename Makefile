@@ -1,5 +1,5 @@
 NAME 			= so_long
-SOURCES 		=  ./srcs/main.c ./srcs/init.c ./srcs/render.c ./srcs/validation.c ./srcs/debug.c
+SOURCES 		= $(shell echo srcs/*.c)
 OBJECTS 		= $(SOURCES:.c=.o)
 HEADER			= -Iincludes
 LIBFT_DIR		= ./libft
@@ -41,7 +41,7 @@ clean:
 		make -C $(MINILIBX_DIR) clean
 		make -C $(LIBFT_DIR) clean
 
-fclean:
+fclean:	clean
 		@echo "$(RED)Deleting everything! ( ͡° ͜ʖ ͡°) $(NONE)"
 		rm -f $(NAME) $(OBJECTS) libft/libft.a
 		

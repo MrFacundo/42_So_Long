@@ -6,5 +6,9 @@
 		"window.h": "c",
 		"libft.h": "c",
 		"so_long.h": "c"
+	},
+	"editor.tokenColorCustomizations": {
+		"comments": "",
+		"textMateRules": []
 	}
 }

@@ -1,50 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/17 11:48:12 by facundo           #+#    #+#             */
+/*   Updated: 2023/04/17 17:37:22 by facundo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-void render_map(t_program *program)
+void	render_map_element(t_game *g, int i, int j)
 {
-	int i;
-	int j;
+	int	(*f)(void *, void *, void *, int x, int y);
+	int	x;
+	int	y;
 
-	i = -1;
-	while (++i < program->map.rows)
+	x = j * g->px;
+	y = i * g->px;
+	f = mlx_put_image_to_window;
+	if (g->table[i][j] == WALL)
+		f(g->mlx_ptr, g->window.win_ptr, g->images.wall, x, y);
+	else if (g->table[i][j] == FLOOR)
+		f(g->mlx_ptr, g->window.win_ptr, g->images.floor, x, y);
+	else if (g->table[i][j] == COLLECTABLE)
+		f(g->mlx_ptr, g->window.win_ptr, g->images.coll, x, y);
+	else if (g->table[i][j] == EXIT)
+		f(g->mlx_ptr, g->window.win_ptr, g->images.exit, x, y);
+	else if (g->table[i][j] == PLAYER)
 	{
-		j = -1;
-		while (++j < program->map.cols)
-		{
-			if (program->lines[i][j] == WALL)
-			{	
-				
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->wall_img, j * program->px, i * program->px);
-			}
-			else if (program->lines[i][j] == FLOOR)
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->floor_img, j * program->px, i * program->px);
-			else if (program->lines[i][j] == COLLECTABLE)
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->collectable_img, j * program->px, i * program->px);
-			else if (program->lines[i][j] == EXIT)
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->exit_img, j * program->px, i * program->px);
-			else if (program->lines[i][j] == PLAYER)
-			{
-				program->player.current.x = j;
-				program->player.current.y = i;
-				program->player.attempt.x = j;
-				program->player.attempt.y = i;
-				mlx_put_image_to_window(program->mlx_ptr, program->window.win_ptr, program->player_img, j * program->px, i * program->px);
-			}
-		}
+		reset_player_location(g, i, j);
+		f(g->mlx_ptr, g->window.win_ptr, g->images.player, x, y);
 	}
 }
 
-void render_counters(t_program *program)
+void	render_map(t_game *g)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < g->map.rows)
+	{
+		j = -1;
+		while (++j < g->map.cols)
+			render_map_element(g, i, j);
+	}
+}
+
+void	render_counters(t_game *g)
 {
 	char	*move_count;
 	char	*collectable_count;
-	
-	move_count = ft_itoa(program->player.moves);
-	collectable_count = ft_itoa(program->player.collectable);
-	mlx_string_put(program->mlx_ptr, program->window.win_ptr, program->window.size.x - 12, 12, 0x00fffe00, move_count);
-	mlx_string_put(program->mlx_ptr, program->window.win_ptr, program->window.size.x - 12, 24, 0x00fffe00, collectable_count);
+	char	(*f)(void *, void *, int x, int y, int color, char *str);
+	char	*color;
+	int		x;
+
+	f = mlx_string_put;
+	color = "0x008fce00";
+	x = g->window.size.x - 12;
+	move_count = ft_itoa(g->player.moves);
+	collectable_count = ft_itoa(g->player.collectable);
+	f(g->mlx_ptr, g->window.win_ptr, x, 12, color, move_count);
+	f(g->mlx_ptr, g->window.win_ptr, x, 24, color, collectable_count);
 	free(move_count);
 	free(collectable_count);
-}	
+}

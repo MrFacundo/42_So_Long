@@ -1,84 +1,79 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
+/*   Updated: 2023/04/17 17:51:31 by facundo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-int exit_program(t_program *program)
-{
-	char **tmp;
-	
-	printf("closing...");
-	if (program->lines)
-	{
-		tmp = program->lines;
-		while (*tmp)
-			free(*tmp++);
-		free(program->lines);
-		program->lines = 0;
-	}
-	if (program->window.win_ptr)
-		mlx_destroy_window(program->mlx_ptr, program->window.win_ptr);
-	exit(0);
-}
-
-void	handle_error(t_program *program, char *message)
-{
-	ft_putstr_fd("Error: ", 2);
-	ft_putstr_fd(message, 2);
-	ft_putchar_fd('\n', 2);
-	exit_program(program);
-}
-
-
-void	move(t_program *program)
+void	move(t_game *game)
 {	
-	print_lines(program->lines);
-	if (program->lines[program->player.attempt.y][program->player.attempt.x] == COLLECTABLE)
-		program->player.collectable += 1;
-	else if (program->lines[program->player.attempt.y][program->player.attempt.x] == EXIT)
-		exit_program(program);
-	program->player.moves += 1;
-	program->lines[program->player.current.y][program->player.current.x] = FLOOR;
-	program->lines[program->player.attempt.y][program->player.attempt.x] = PLAYER;
-	mlx_clear_window(program->mlx_ptr, program->window.win_ptr);
-	render_map(program);
-	render_counters(program);
+	if (game->game_over == 1)
+	{
+		render_game_over_message(game);
+		return ;
+	}
+	else {
+		print_table(game->table);
+		if (game->table[game->player.attempt.y][game->player.attempt.x] == COLLECTABLE)
+			game->player.collectable += 1;
+		else if (game->table[game->player.attempt.y][game->player.attempt.x] == EXIT)
+			game->game_over = 1;
+		game->player.moves += 1;
+		game->table[game->player.current.y][game->player.current.x] = FLOOR;
+		game->table[game->player.attempt.y][game->player.attempt.x] = PLAYER;
+		mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
+	}
+	if (!game->game_over)
+	{
+		render_map(game);
+		render_counters(game);
+	}
 }
 
-int	handle_key(int keycode, t_program *program)
+int	handle_key(int keycode, t_game *game)
 {
 	if (keycode == ESC)
-		exit_program(program);
+		exit_game(game);
 	else if (keycode == LEFT)
-		program->player.attempt.x = program->player.current.x - 1;
+		game->player.attempt.x = game->player.current.x - 1;
 	else if (keycode == RIGHT)
-		program->player.attempt.x = program->player.current.x + 1;
+		game->player.attempt.x = game->player.current.x + 1;
 	else if (keycode == DOWN)
-		program->player.attempt.y = program->player.current.y + 1;
+		game->player.attempt.y = game->player.current.y + 1;
 	else if (keycode == UP)
-		program->player.attempt.y = program->player.current.y - 1;
+		game->player.attempt.y = game->player.current.y - 1;
 	else
 		return (0);
-	if (program->lines[program->player.attempt.y][program->player.attempt.x] != WALL)
-		move(program);
+	if (game->table[game->player.attempt.y][game->player.attempt.x] != WALL)
+		move(game);
 	else
 	{
-		program->player.attempt.x = program->player.current.x;
-		program->player.attempt.y = program->player.current.y;
+		game->player.attempt.x = game->player.current.x;
+		game->player.attempt.y = game->player.current.y;
 	}
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_program program;
+	t_game	game;
 
-	init_program(&program);
-	validate_arg(argc, argv[1], &program);
-	program.mlx_ptr = mlx_init();
-	program.window = init_window(program, "So Long");
-	init_images(&program);
-	render_map(&program);
-	mlx_key_hook(program.window.win_ptr, handle_key, &program);
-	mlx_loop(program.mlx_ptr);
+	init_game(&game);
+	validate_arg(argc, argv[1], &game);
+	game.mlx_ptr = mlx_init();
+	game.window = init_window(game, "So Long");
+	init_images(&game);
+	render_map(&game);
+	mlx_key_hook(game.window.win_ptr, handle_key, &game);
+	mlx_loop(game.mlx_ptr);
 	return (0);
 }

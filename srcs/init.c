@@ -1,62 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
+/*   Updated: 2023/04/17 17:20:12 by facundo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-t_window init_window(t_program program, char *name)
+t_window	init_window(t_game game, char *name)
 {
-	t_window window;
-	int width;
-	int height;
-	window.size.x = program.map.cols * program.px;
-	window.size.y = program.map.rows * program.px;
-	window.win_ptr = mlx_new_window(program.mlx_ptr, window.size.x, window.size.y, name);
-	mlx_hook(window.win_ptr, 17, 0, exit_program, &program);
+	t_window	window;
+
+	window.size.x = game.map.cols * game.px;
+	window.size.y = game.map.rows * game.px;
+	window.win_ptr = mlx_new_window(game.mlx_ptr,
+			window.size.x,
+			window.size.y,
+			name);
+	mlx_hook(window.win_ptr, 17, 0, exit_game, &game);
 	return (window);
 }
 
-void init_program(t_program *program)
+void	init_game(t_game *game)
 {
-	program->window.win_ptr = 0;
-	program->px = 32;
-	program->lines = 0;
-	program->map.diff = 0;
-	program->map.collectable_count = 0;
-	program->map.exit_count = 0;
-	program->map.player_count = 0;
-	program->map.invalid_char = 0;
-	program->map.invalid_limits = 0;
-	program->player.collectable = 0;
-	program->player.moves = 0;
+	game->window.win_ptr = 0;
+	game->px = 32;
+	game->table = 0;
+	game->map.diff = 0;
+	game->map.collectable_count = 0;
+	game->map.exit_count = 0;
+	game->map.player_count = 0;
+	game->map.invalid_char = 0;
+	game->map.invalid_limits = 0;
+	game->player.collectable = 0;
+	game->player.moves = 0;
+	game->game_over = 0;
 }
 
-void init_lines(char *map_file, t_program *program, char ***lines_ptr)
+void	init_table(char *map_file, t_game *game, char ***table_ptr)
 {
-	char **lines;
-	int i;
-	int fd;
+	char	**table;
+	int		i;
+	int		fd;
 
 	fd = open(map_file, O_RDONLY);
 	if (fd == -1)
-		handle_error(program, strerror(errno));
-	lines = ft_calloc(program->map.rows + 1, sizeof(char *));
-	if (!lines)
-		handle_error(program, MALLOC_ERROR);
+		handle_error(game, strerror(errno));
+	table = ft_calloc(game->map.rows + 1, sizeof(char *));
+	if (!table)
+		handle_error(game, MALLOC_ERROR);
 	i = 0;
-	while (lines[i++] = ft_get_next_line(fd));
+	while (table[i++] = ft_get_next_line(fd));
 	close(fd);
-	*lines_ptr = lines;
-	print_lines(*lines_ptr);
+	*table_ptr = table;
+	print_table(*table_ptr);
 }
 
-void init_images(t_program *program)
+void	init_images(t_game *game)
 {
-	char *line;
-	int fd;
-	int i;
-
-	program->floor_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/floor.xpm", &program->px, &program->px);
-	program->wall_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/wall.xpm", &program->px, &program->px);
-	program->collectable_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/collectable.xpm", &program->px, &program->px);
-	program->exit_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/exit.xpm", &program->px, &program->px);
-	program->player_img = mlx_xpm_file_to_image(program->mlx_ptr, "xpm/player.xpm", &program->px, &program->px);
+	game->images.floor = mlx_xpm_file_to_image(
+			game->mlx_ptr,
+			"xpm/floor.xpm",
+			&game->px,
+			&game->px);
+	game->images.wall = mlx_xpm_file_to_image(
+			game->mlx_ptr,
+			"xpm/wall.xpm",
+			&game->px,
+			&game->px);
+	game->images.coll = mlx_xpm_file_to_image(
+			game->mlx_ptr,
+			"xpm/collectable.xpm",
+			&game->px,
+			&game->px);
+	game->images.exit = mlx_xpm_file_to_image(
+			game->mlx_ptr,
+			"xpm/exit.xpm",
+			&game->px,
+			&game->px);
+	game->images.player = mlx_xpm_file_to_image(
+			game->mlx_ptr,
+			"xpm/player.xpm",
+			&game->px,
+			&game->px);
 }

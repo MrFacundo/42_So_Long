@@ -1,25 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/17 11:50:25 by facundo           #+#    #+#             */
+/*   Updated: 2023/04/17 12:54:51 by facundo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-void print_lines(char **lines_ptr)
+void	print_table(char **table_ptr)
 {
-	int i;
+	int	i;
 
 	i = 0;
-    while (lines_ptr[i])
-        printf("%s", lines_ptr[i++]);
+    while (table_ptr[i])
+        printf("%s", table_ptr[i++]);
 	printf("\n\n");
 }
 
-void print_map_validation(t_program *program)
+void	print_map_validation(t_game *game)
 {
-	printf("program->map.rows %d\n", program->map.rows);
-	printf("program->map.cols %d\n", program->map.cols);
-	printf("program->map.diff %d\n", program->map.diff);
-	printf("program->map.collectable_count %d\n", program->map.collectable_count);
-	printf("program->map.exit_count %d\n", program->map.exit_count);
-	printf("program->map.player_count %d\n", program->map.player_count);
-	printf("program->map.invalid_char %d\n", program->map.invalid_char);
-	printf("program->map.invalid_limits %d\n", program->map.invalid_limits);
+	printf("game->map.rows %d\n", game->map.rows);
+	printf("game->map.cols %d\n", game->map.cols);
+	printf("game->map.diff %d\n", game->map.diff);
+	printf("game->map.collectable_count %d\n", game->map.collectable_count);
+	printf("game->map.exit_count %d\n", game->map.exit_count);
+	printf("game->map.player_count %d\n", game->map.player_count);
+	printf("game->map.invalid_char %d\n", game->map.invalid_char);
+	printf("game->map.invalid_limits %d\n", game->map.invalid_limits);
 }
