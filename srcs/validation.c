@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 23:16:12 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/18 17:24:38 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	map_is_valid(char *map_file_path, t_game *game)
         game->map.rows++;
     }
     close(fd);
-	printf("rows: %d!\n", game->map.rows);
 	if (game->map.rows <3)
 		handle_error(game, MAP_ROWS);
 	open_and_check(fd, map_file_path, game);
@@ -58,6 +57,8 @@ int	extension_is_valid(char *map_file_path)
 
 int	flood_fill(char **table, int y, int x, int *requirements)
 {
+	printf("cccccccccccccccc:\n");
+	printf("table[y][x]: %c");
 	if (table[y][x] == '1')
 		return (0);
 	else if (table[y][x] == 'C')
@@ -83,7 +84,11 @@ int	paths_are_valid(t_game *game)
 	requirements[0] = 0;
 	requirements[1] = 0;
 	flood_fill(game->table_copy, y, x, requirements);
+	printf("table_copy for flood:\n");
+	print_table(game->table_copy);
 	free_table(game->table_copy);
+	printf("requirements[0]: %d\n", requirements[0]);
+	printf("requirements[1]: %d\n", requirements[1]);
 	if (!requirements[0] || requirements[1] != game->map.collectable_count)
 		return (0);
 }
@@ -97,9 +102,9 @@ void	validate_arg(int argc, char *argv, t_game *game)
 	if (!map_is_valid(argv, game))
 		handle_error(game, BAD_ELEMENTS);
 	init_table(argv, game, &game->table);
-	init_table(argv, game, &game->table_copy);
-	game->table_copy2 = copy_table(game);
-
+	copy_table(game->table, &game->table_copy);
+	copy_table(game->table, &game->table_copy2);
+	printf("table_copy[0]: %s\n", game->table_copy[0]);
 	if (!paths_are_valid(game))
 		handle_error(game, BAD_PATH);
 }

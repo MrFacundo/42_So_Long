@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 23:00:32 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/18 17:12:47 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	init_table(char *map_file, t_game *game, char ***table_ptr)
 	while (table[i++] = ft_get_next_line(fd));
 	close(fd);
 	*table_ptr = table;
+	printf("*&table_ptr: %p\n", table_ptr);
 	print_table(*table_ptr);
 }
 

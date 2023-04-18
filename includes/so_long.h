@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 22:37:04 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/18 17:13:56 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int			exit_game(t_game *program);
 void		handle_error(t_game *program, char *message);
 int			open_and_check(int fd, char *map_file_path, t_game *program);
 void		reset_player_location(t_game *game, int y, int x);
-char		**copy_table(t_game *game);
+void		copy_table(char **src, char ***dst);
 
 // map_checks.c
 void		check_characters(char *row, int row_number, t_game *program);

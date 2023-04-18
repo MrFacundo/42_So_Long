@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:24 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 23:16:11 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/18 17:36:05 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,22 @@ void	free_table(char **tab)
    	free(tab);
 }
 
-char **copy_table(t_game *game) {
-    int i;
-    int j;
-    int rows;
-    int cols;
-    char **new_table;
 
-    i = 0;
-    rows = game->map.rows + 1;
-    cols = game->map.cols + 1;
-    new_table = ft_calloc(rows, sizeof(char *));
-    if (!new_table)
-        handle_error(game, MALLOC_ERROR);
-    while (i < rows) {
-        new_table[i] = ft_strdup(game->table[i]);
-		i++;
-    }
-    print_table(new_table);
-    return new_table;
+void copy_table(char **src, char ***dst)
+{
+    int	rows;
+	int	i;
+	char	**table;
+    
+	rows = 0;
+	i = 0;
+    while (src[rows])
+        rows++;
+    table = ft_calloc(rows + 1, sizeof(char *));
+    int i = 0;
+    while (src[i])
+        table[i] = ft_strdup(src[i++]);
+	*dst = table;
 }
 
 int	exit_game(t_game *game)

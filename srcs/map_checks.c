@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:57 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 12:54:51 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/18 16:51:26 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	check_characters(char *row, int row_number, t_game *game)
 			game->player.current.y = row_number - 1;
 			game->player.current.x = i;
 			game->map.player_count++;
+			printf("Player position: %d, %d\n", game->player.current.y, game->player.current.x);
 		}
 		else if (row[i] == '0' || row[i] == '1' || row[i] == '\n')
 			;
