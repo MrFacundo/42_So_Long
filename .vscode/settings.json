@@ -5,7 +5,8 @@
 		"mlx.h": "c",
 		"window.h": "c",
 		"libft.h": "c",
-		"so_long.h": "c"
+		"so_long.h": "c",
+		"typeinfo": "c"
 	},
 	"editor.tokenColorCustomizations": {
 		"comments": "",

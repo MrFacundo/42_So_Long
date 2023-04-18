@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:12 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 15:44:09 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/18 21:43:18 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-void	render_map_element(t_game *g, int i, int j)
+static void	render_map_element(t_game *g, int i, int j)
 {
 	int	(*f)(void *, void *, void *, int x, int y);
 	int	x;
@@ -57,16 +57,40 @@ void	render_counters(t_game *g)
 	char	*move_count;
 	char	*collectable_count;
 	int		(*f)(void *, void *, int x, int y, int color, char *str);
-	int	color;
+	int		color;
 	int		x;
 
 	f = mlx_string_put;
-	color = 0x008fce00;
-	x = g->window.size.x - 12;
+	color = YELLOW;
+	x = g->window.size.x - g->px / 2;
 	move_count = ft_itoa(g->player.moves);
 	collectable_count = ft_itoa(g->player.collected);
-	f(g->mlx_ptr, g->window.win_ptr, x, 12, color, move_count);
-	f(g->mlx_ptr, g->window.win_ptr, x, 24, color, collectable_count);
+	f(g->mlx_ptr, g->window.win_ptr, x, g->px / 2, color, move_count);
+	f(g->mlx_ptr, g->window.win_ptr, x, g->px, color, collectable_count);
 	free(move_count);
 	free(collectable_count);
+}
+
+void	render_game_over_message(t_game *g)
+{
+	int		(*f)(void *, void *, int x, int y, int color, char *str);
+	int		color;
+	int		x;
+	int		y;
+	char	*message;
+
+	g->game_over = 1;
+	mlx_clear_window(g->mlx_ptr, g->window.win_ptr);
+	if (g->player.collected == g->map.collectable_count)
+		message = WIN_MSG;
+	else
+		message = LOSE_MSG;
+	f = mlx_string_put;
+	color = YELLOW;
+	x = g->window.size.x / 2 - g->px * 2;
+	y = g->window.size.y / 2 - g->px / 2;
+	f(g->mlx_ptr, g->window.win_ptr, x, y, color, message);
+	message = RESET_MSG;
+	y += g->px;
+	f(g->mlx_ptr, g->window.win_ptr, x, y, color, message);
 }

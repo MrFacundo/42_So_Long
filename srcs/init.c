@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 17:12:47 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/18 21:34:21 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
+
+void	init_game(t_game *game)
+{
+	game->map.player_count = 0;
+	game->player.collected = 0;
+	game->player.moves = 0;
+	game->game_over = 0;
+	render_map(game);
+	mlx_key_hook(game->window.win_ptr, handle_key, game);
+	mlx_loop(game->mlx_ptr);
+}
 
 t_window	init_window(t_game game, char *name)
 {
@@ -41,7 +52,7 @@ void	init_program(t_game *game)
 
 }
 
-void	init_table(char *map_file, t_game *game, char ***table_ptr)
+void	init_table(char *map_file, t_game *game)
 {
 	char	**table;
 	int		i;
@@ -56,9 +67,9 @@ void	init_table(char *map_file, t_game *game, char ***table_ptr)
 	i = 0;
 	while (table[i++] = ft_get_next_line(fd));
 	close(fd);
-	*table_ptr = table;
-	printf("*&table_ptr: %p\n", table_ptr);
-	print_table(*table_ptr);
+	game->table = table;
+	printf("*&table_ptr: %p\n", game->table);
+	print_table(game->table);
 }
 
 void	init_images(t_game *game)

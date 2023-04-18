@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 17:13:56 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/18 22:12:36 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <unistd.h>
+# include <unistd.h> // read, close
 # include <stdio.h>	// printf
 # include <stdlib.h> // malloc, exit
 # include <fcntl.h>	// O_RDONLY
 # include <errno.h>	// errno
 # include <string.h> // strerror
-/*# include <keysymdef.h>*/
 
 // key codes
 # define ESC 65307
@@ -27,6 +26,7 @@
 # define RIGHT 100
 # define UP 119
 # define DOWN 115
+# define RESET 102
 
 // map elements
 # define FLOOR '0'
@@ -45,6 +45,14 @@
 # define MAP_CHAR "Strange chars in map m8"
 # define MAP_LIMITS "Walls are all wrong m8"
 # define BAD_PATH "No valid path to exit m8"
+
+// game messages
+# define WIN_MSG "You win!"
+# define LOSE_MSG "Game Over"
+# define RESET_MSG "Press F to pay respects"
+
+// colors
+# define YELLOW 0x008fce00
 
 // structs
 typedef struct s_vector
@@ -115,39 +123,20 @@ typedef struct s_game
 }	t_game;
 
 //functions
-// main.c
-void		handle_error(t_game *program, char *message);
-int			main(int argc, char **argv);
-void		init_game(t_game *game);
-int			handle_key(int keycode, t_game *game);
 
 // init.c
-void		count_rows_and_cols(char *map_file, t_map *map);
+void		init_game(t_game *game);
 t_window	init_window(t_game program, char *name);
 void		init_program(t_game *program);
+void		init_table(char *map_file, t_game *program);
 void		init_images(t_game *program);
 
-// render.c
-void		render_map(t_game *program);
-void		render_counters(t_game *program);
-
-// validation.c
-void		validate_arg(int argc, char *argv, t_game *program);
-int			extension_is_valid(char *map_file_path);
-int			map_is_valid(char *map_file_path, t_game *program);
-void		init_table(char *map_file, t_game *program, char ***table_ptr);
-
-// debug.c
-void		print_table(char **table_ptr);
-void		print_map_validation(t_game *program);
-
-// utils.c
-void		free_table(char **tab);
+// main.c
+int			main(int argc, char **argv);
+int			handle_key(int keycode, t_game *game);
+void		move(t_game *game);
+void		reset_game(t_game *game);
 int			exit_game(t_game *program);
-void		handle_error(t_game *program, char *message);
-int			open_and_check(int fd, char *map_file_path, t_game *program);
-void		reset_player_location(t_game *game, int y, int x);
-void		copy_table(char **src, char ***dst);
 
 // map_checks.c
 void		check_characters(char *row, int row_number, t_game *program);
@@ -155,10 +144,26 @@ void		check_length(char *row, int row_number, t_game *program);
 void		check_limits(char *row, int row_number, t_game *program);
 void		check_row(char *row, int row_number, t_game *program);
 
-// game_over.c
-void		render_background(t_game *game);
-void		reset_game(t_game *game);
+// render.c
+void		render_map(t_game *program);
+void		render_counters(t_game *program);
 void		render_game_over_message(t_game *g);
 
+// utils.c
+void		free_table(char **tab);
+void		handle_error(t_game *program, char *message);
+int			open_and_check(int fd, char *map_file_path, t_game *program);
+void		reset_player_location(t_game *game, int y, int x);
+void		copy_table(char **src, char ***dst);
+
+// validation.c
+void		validate_arg(int argc, char *argv, t_game *program);
+int			extension_is_valid(char *map_file_path);
+int			map_is_valid(char *map_file_path, t_game *program);
+int			paths_are_valid(t_game *game);
+
+// debug.c
+void		print_table(char **table_ptr);
+void		print_map_validation(t_game *program);
 
 #endif

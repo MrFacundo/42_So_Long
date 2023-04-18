@@ -3,16 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 17:24:38 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/18 22:12:36 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minilibx-linux/mlx.h"
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
+
+static int	flood_fill(char **table, int y, int x, int *requirements)
+{
+	if (table[y][x] == '1')
+		return (0);
+	else if (table[y][x] == 'C')
+		requirements[1]++;
+	else if (table[y][x] == 'E')
+		requirements[0] = 1;
+	table[y][x] = '1';
+	flood_fill(table, y, x + 1, requirements);
+	flood_fill(table, y, x - 1, requirements);
+	flood_fill(table, y + 1, x, requirements);
+	flood_fill(table, y - 1, x, requirements);
+	return (0);
+}
+
+void	validate_arg(int argc, char *argv, t_game *game)
+{
+	if (argc != 2)
+		handle_error(game, BAD_ARGS);
+	if (!extension_is_valid(argv))
+		handle_error(game, BAD_EXTENSION);
+	if (!map_is_valid(argv, game))
+		handle_error(game, BAD_ELEMENTS);
+	init_table(argv, game);
+	copy_table(game->table, &game->table_copy);
+	if (!paths_are_valid(game))
+		handle_error(game, BAD_PATH);
+	copy_table(game->table, &game->table_copy);
+	printf("2nd table_copy:\n");
+	print_table(game->table_copy);
+}
+
+int	extension_is_valid(char *map_file_path)
+{
+	char	*extension;
+
+	extension = ft_strrchr(map_file_path, '.');
+	printf("extension: %s\n", extension);
+	if (!extension || ft_strncmp(extension, ".ber", 4 ))
+		return (0);
+	return (1);
+}
 
 int	map_is_valid(char *map_file_path, t_game *game)
 {
@@ -44,35 +88,6 @@ int	map_is_valid(char *map_file_path, t_game *game)
     return (1);
 }
 
-int	extension_is_valid(char *map_file_path)
-{
-	char	*extension;
-
-	extension = ft_strrchr(map_file_path, '.');
-	printf("extension: %s\n", extension);
-	if (!extension || ft_strncmp(extension, ".ber", 4 ))
-		return (0);
-	return (1);
-}
-
-int	flood_fill(char **table, int y, int x, int *requirements)
-{
-	printf("cccccccccccccccc:\n");
-	printf("table[y][x]: %c");
-	if (table[y][x] == '1')
-		return (0);
-	else if (table[y][x] == 'C')
-		requirements[1]++;
-	else if (table[y][x] == 'E')
-		requirements[0] = 1;
-	table[y][x] = '1';
-	flood_fill(table, y, x + 1, requirements);
-	flood_fill(table, y, x - 1, requirements);
-	flood_fill(table, y + 1, x, requirements);
-	flood_fill(table, y - 1, x, requirements);
-	return (0);
-}
-
 int	paths_are_valid(t_game *game)
 {
 	int		x;
@@ -84,28 +99,9 @@ int	paths_are_valid(t_game *game)
 	requirements[0] = 0;
 	requirements[1] = 0;
 	flood_fill(game->table_copy, y, x, requirements);
-	printf("table_copy for flood:\n");
-	print_table(game->table_copy);
 	free_table(game->table_copy);
 	printf("requirements[0]: %d\n", requirements[0]);
 	printf("requirements[1]: %d\n", requirements[1]);
 	if (!requirements[0] || requirements[1] != game->map.collectable_count)
 		return (0);
 }
-
-void	validate_arg(int argc, char *argv, t_game *game)
-{
-	if (argc != 2)
-		handle_error(game, BAD_ARGS);
-	if (!extension_is_valid(argv))
-		handle_error(game, BAD_EXTENSION);
-	if (!map_is_valid(argv, game))
-		handle_error(game, BAD_ELEMENTS);
-	init_table(argv, game, &game->table);
-	copy_table(game->table, &game->table_copy);
-	copy_table(game->table, &game->table_copy2);
-	printf("table_copy[0]: %s\n", game->table_copy[0]);
-	if (!paths_are_valid(game))
-		handle_error(game, BAD_PATH);
-}
-

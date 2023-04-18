@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/17 22:36:01 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/18 22:01:15 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,25 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-void	move(t_game *game)
-{	
-	print_table(game->table);
-	if (game->table[game->player.attempt.y][game->player.attempt.x] == COLLECTABLE)
-		game->player.collected += 1;
-	else if (game->table[game->player.attempt.y][game->player.attempt.x] == EXIT)
-	{
-		render_game_over_message(game);
-		return ;
-	}
-	game->player.moves += 1;
-	game->table[game->player.current.y][game->player.current.x] = FLOOR;
-	game->table[game->player.attempt.y][game->player.attempt.x] = PLAYER;
-	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
-	render_map(game);
-	render_counters(game);
-}
-
-void	init_game(t_game *game)
+int	main(int argc, char **argv)
 {
-	game->map.player_count = 0;
-	game->player.collected = 0;
-	game->player.moves = 0;
-	game->game_over = 0;
-	render_map(game);
-	mlx_key_hook(game->window.win_ptr, handle_key, game);
-	mlx_loop(game->mlx_ptr);
+	t_game	game;
+
+	init_program(&game);
+	validate_arg(argc, argv[1], &game);
+	game.mlx_ptr = mlx_init();
+	game.window = init_window(game, "So Long");
+	init_images(&game);
+	init_game(&game);
+	return (0);
 }
 
 int	handle_key(int keycode, t_game *game)
 {
+	printf("keycode: %d\n", keycode);
 	if (keycode == ESC)
 		exit_game(game);
-	else if (keycode == 'r')
+	else if (keycode == RESET)
 		reset_game(game);
 	if (!game->game_over)
 	{
@@ -72,15 +57,42 @@ int	handle_key(int keycode, t_game *game)
 	return (0);
 }
 
-int	main(int argc, char **argv)
-{
-	t_game	game;
+void	move(t_game *game)
+{	
+	print_table(game->table);
+	if (game->table[game->player.attempt.y][game->player.attempt.x] == COLLECTABLE)
+		game->player.collected += 1;
+	else if (game->table[game->player.attempt.y][game->player.attempt.x] == EXIT)
+	{
+		render_game_over_message(game);
+		return ;
+	}
+	game->player.moves += 1;
+	game->table[game->player.current.y][game->player.current.x] = FLOOR;
+	game->table[game->player.attempt.y][game->player.attempt.x] = PLAYER;
+	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
+	render_map(game);
+	render_counters(game);
+}
 
-	init_program(&game);
-	validate_arg(argc, argv[1], &game);
-	game.mlx_ptr = mlx_init();
-	game.window = init_window(game, "So Long");
-	init_images(&game);
-	init_game(&game);
-	return (0);
+void	reset_game(t_game *game)
+{
+	printf("reset game\n");
+	print_table(game->table_copy);
+	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
+	free_table(game->table);
+	copy_table(game->table_copy, &game->table);
+	init_game(game);
+}
+
+int	exit_game(t_game *game)
+{
+	char	**tmp;
+	
+	printf("closing...");
+	if (game->table)
+		free_table(game->table);
+	if (game->window.win_ptr)
+		mlx_destroy_window(game->mlx_ptr, game->window.win_ptr);
+	exit(0);
 }
