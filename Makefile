@@ -5,7 +5,7 @@ HEADER			= -Iincludes
 LIBFT_DIR		= ./libft
 MINILIBX_DIR	= ./minilibx-linux
 CC 				= gcc
-CFLAGS_PROD 	= -g
+CFLAGS_PROD 	= -g -Wall -Wextra -Werror
 LFLAGS		 	= -L$(MINILIBX_DIR) -lmlx -L$(LIBFT_DIR) -lft -lXext -lX11 -lm -lbsd
 
 # --- COLORS ---

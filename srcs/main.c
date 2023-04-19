@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 16:36:12 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/19 17:24:35 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	main(int argc, char **argv)
 {
 	t_game	game;
-
+	
 	init_program(&game);
 	validate_arg(argc, argv[1], &game);
 	game.mlx_ptr = mlx_init();
@@ -89,13 +89,14 @@ void	reset_game(t_game *game)
 	init_game(game);
 }
 
+/* Frees the tables and exits the program. */
 int	exit_game(t_game *game)
 {
-	char	**tmp;
-	
 	printf("closing...");
 	if (game->table)
-		free_table(game->table);
+		// free_table(game->table);
+	if (game->table_copy)
+		// free_table(game->table_copy);
 	if (game->window.win_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->window.win_ptr);
 	exit(0);

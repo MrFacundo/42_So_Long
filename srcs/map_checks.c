@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:57 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 16:39:56 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/19 17:33:30 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	check_limits(char *row, int row_number, t_game *game)
 			row++;
 		}
 	else if (row[0] != WALL
-		|| row[game->map.cols - 1] != WALL
-		&& row[game->map.cols - 1] != '\n')
+		|| (row[game->map.cols - 1] != WALL
+		&& row[game->map.cols - 1] != '\n'))
 		game->map.invalid_limits = 1;
 }

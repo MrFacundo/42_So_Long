@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 16:26:32 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/19 17:34:27 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	init_table(char *map_file, t_game *game)
 	if (!table)
 		handle_error(game, MALLOC_ERROR);
 	i = 0;
-	while (table[i++] = ft_get_next_line(fd));
+	while ((table[i++] = ft_get_next_line(fd)));
 	close(fd);
 	game->table = table;
 	printf("init table %p\n", game->table);
