@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:57 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 21:57:30 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:40:45 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	check_length(char *row, int row_number, t_game *game)
 	int	cols;
 
 	cols = (int)ft_strlen(row) - ft_strlen(ft_strchr(row, '\n'));
+	printf("cols: %d\n", cols);
 	if (row_number == 1)
 		game->map.cols = cols;
 	else if (cols != game->map.cols)

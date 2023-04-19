@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 22:12:36 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:40:58 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ int	map_is_valid(char *map_file_path, t_game *game)
     i = 1;
     while (row = ft_get_next_line(fd))
 	{
+		printf("i %d\n", i);
 		check_row(row, i++, game);
+		printf("i %d\n", i);
 		free(row);
 	}
     close(fd);
