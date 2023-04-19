@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 22:12:36 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:39:13 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,6 @@ typedef struct s_window
 	void		*win_ptr;
 	t_vector	size;
 }	t_window;
-
-typedef struct s_img
-{
-	t_window	window;
-	void		*img_ptr;
-	char		*addr;
-	int			height;
-	int			width;
-	int			bpp;
-	int			endian;
-	int			line_len;
-}		t_img;
-
 typedef struct s_map
 {
 	int	rows;
@@ -106,6 +93,9 @@ typedef struct s_img_ptrs
 	void	*coll;
 	void	*exit;
 	void	*player;
+	void	*player1;
+	void	*player2;
+	void	*player3;
 }	t_img_ptrs;
 
 typedef struct s_game
@@ -148,6 +138,8 @@ void		check_row(char *row, int row_number, t_game *program);
 void		render_map(t_game *program);
 void		render_counters(t_game *program);
 void		render_game_over_message(t_game *g);
+void		animate(t_game *game);
+
 
 // utils.c
 void		free_table(char **tab);

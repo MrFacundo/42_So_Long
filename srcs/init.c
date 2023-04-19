@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 10:26:50 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/19 16:26:32 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,21 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
+/* Initializes variables needed for validation and first render */
+void	init_program(t_game *game)
+{
+	game->window.win_ptr = 0;
+	game->px = 32;
+	game->table = 0;
+	game->map.diff = 0;
+	game->map.collectable_count = 0;
+	game->map.exit_count = 0;
+	game->map.invalid_char = 0;
+	game->map.invalid_limits = 0;
+}
+
+/* Initializes game contect variables, renders images
+	and hooks key input to mlx_loop */
 void	init_game(t_game *game)
 {
 	game->map.player_count = 0;
@@ -25,6 +40,7 @@ void	init_game(t_game *game)
 	mlx_loop(game->mlx_ptr);
 }
 
+/* Creates window pointer and hooks ESC key input to mlx_hook */
 t_window	init_window(t_game game, char *name)
 {
 	t_window	window;
@@ -39,19 +55,7 @@ t_window	init_window(t_game game, char *name)
 	return (window);
 }
 
-void	init_program(t_game *game)
-{
-	game->window.win_ptr = 0;
-	game->px = 32;
-	game->table = 0;
-	game->map.diff = 0;
-	game->map.collectable_count = 0;
-	game->map.exit_count = 0;
-	game->map.invalid_char = 0;
-	game->map.invalid_limits = 0;
-
-}
-
+/* Creates a table or 2D array from the provided map file*/
 void	init_table(char *map_file, t_game *game)
 {
 	char	**table;
@@ -68,35 +72,21 @@ void	init_table(char *map_file, t_game *game)
 	while (table[i++] = ft_get_next_line(fd));
 	close(fd);
 	game->table = table;
-	printf("*&table_ptr: %p\n", game->table);
+	printf("init table %p\n", game->table);
 	print_table(game->table);
 }
-
-void	init_images(t_game *game)
+/* Creates pointers for the all images needed in the game */
+void	init_images(t_game *g)
 {
-	game->images.floor = mlx_xpm_file_to_image(
-			game->mlx_ptr,
-			"xpm/floor.xpm",
-			&game->px,
-			&game->px);
-	game->images.wall = mlx_xpm_file_to_image(
-			game->mlx_ptr,
-			"xpm/wall.xpm",
-			&game->px,
-			&game->px);
-	game->images.coll = mlx_xpm_file_to_image(
-			game->mlx_ptr,
-			"xpm/collectable.xpm",
-			&game->px,
-			&game->px);
-	game->images.exit = mlx_xpm_file_to_image(
-			game->mlx_ptr,
-			"xpm/exit.xpm",
-			&game->px,
-			&game->px);
-	game->images.player = mlx_xpm_file_to_image(
-			game->mlx_ptr,
-			"xpm/player.xpm",
-			&game->px,
-			&game->px);
+	void	*(*f)(void *, char *, int *, int *);
+
+	f = mlx_xpm_file_to_image;
+	g->images.floor = f (g->mlx_ptr, "xpm/floor.xpm", &g->px, &g->px);
+	g->images.wall = f(g->mlx_ptr, "xpm/wall.xpm", &g->px, &g->px);
+	g->images.coll = f(g->mlx_ptr, "xpm/coll.xpm", &g->px, &g->px);
+	g->images.exit = f(g->mlx_ptr, "xpm/exit.xpm", &g->px, &g->px);
+	g->images.player1 = f(g->mlx_ptr, "xpm/p1.xpm", &g->px, &g->px);
+	g->images.player2 = f(g->mlx_ptr, "xpm/p2.xpm", &g->px, &g->px);
+	g->images.player3 = f(g->mlx_ptr, "xpm/pcoll.xpm", &g->px, &g->px);
+	g->images.player = g->images.player1;
 }

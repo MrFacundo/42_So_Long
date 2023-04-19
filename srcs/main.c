@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 10:40:51 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/19 16:36:12 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
+/* Input management. Called each time a key is pressed. */
 int	handle_key(int keycode, t_game *game)
 {
 	printf("keycode: %d\n", keycode);
@@ -57,8 +58,10 @@ int	handle_key(int keycode, t_game *game)
 	return (0);
 }
 
+/* Move the player to the next position. */
 void	move(t_game *game)
 {	
+	printf("move table %p\n", game->table);
 	print_table(game->table);
 	if (game->table[game->player.attempt.y][game->player.attempt.x] == COLLECTABLE)
 		game->player.collected += 1;
@@ -68,6 +71,7 @@ void	move(t_game *game)
 		return ;
 	}
 	game->player.moves += 1;
+	animate(game);
 	game->table[game->player.current.y][game->player.current.x] = FLOOR;
 	game->table[game->player.attempt.y][game->player.attempt.x] = PLAYER;
 	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
@@ -75,10 +79,10 @@ void	move(t_game *game)
 	render_counters(game);
 }
 
+/* Clears the window, resets the table and re-initializes the game. */
 void	reset_game(t_game *game)
 {
 	printf("reset game\n");
-	print_table(game->table_copy);
 	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
 	free_table(game->table);
 	copy_table(game->table_copy, &game->table);

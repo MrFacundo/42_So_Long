@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 10:40:58 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/19 16:07:00 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	validate_arg(int argc, char *argv, t_game *game)
 	if (!paths_are_valid(game))
 		handle_error(game, BAD_PATH);
 	copy_table(game->table, &game->table_copy);
-	printf("2nd table_copy:\n");
-	print_table(game->table_copy);
 }
 
 int	extension_is_valid(char *map_file_path)
@@ -76,9 +74,7 @@ int	map_is_valid(char *map_file_path, t_game *game)
     i = 1;
     while (row = ft_get_next_line(fd))
 	{
-		printf("i %d\n", i);
 		check_row(row, i++, game);
-		printf("i %d\n", i);
 		free(row);
 	}
     close(fd);

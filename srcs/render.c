@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:12 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 21:43:18 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:00:46 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	render_map_element(t_game *g, int i, int j)
 	if (g->table[i][j] == WALL)
 		f(g->mlx_ptr, g->window.win_ptr, g->images.wall, x, y);
 	else if (g->table[i][j] == FLOOR)
-		f(g->mlx_ptr, g->window.win_ptr, g->images.floor, x, y);
+		;
 	else if (g->table[i][j] == COLLECTABLE)
 		f(g->mlx_ptr, g->window.win_ptr, g->images.coll, x, y);
 	else if (g->table[i][j] == EXIT)
@@ -93,4 +93,17 @@ void	render_game_over_message(t_game *g)
 	message = RESET_MSG;
 	y += g->px;
 	f(g->mlx_ptr, g->window.win_ptr, x, y, color, message);
+}
+
+void	animate(t_game *game)
+{
+	if (game->table[game->player.attempt.y][game->player.attempt.x] == COLLECTABLE)
+		{
+			game->images.player = game->images.player3;
+			return ;
+		}	
+	if (game->player.moves %2 == 0)
+		game->images.player = game->images.player1;
+	else
+		game->images.player = game->images.player2;
 }

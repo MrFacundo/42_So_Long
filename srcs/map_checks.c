@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:57 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 10:40:45 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/19 16:39:56 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
+/* Perform checks on each row and sets game variables */
 void	check_row(char *row, int row_number, t_game *game)
 {
 	check_length(row, row_number, game);
@@ -27,6 +28,7 @@ void	check_row(char *row, int row_number, t_game *game)
 		handle_error(game, MAP_LIMITS);
 }
 
+/* Checks if the map is rectangular */
 void	check_length(char *row, int row_number, t_game *game)
 {
 	int	cols;
@@ -39,6 +41,7 @@ void	check_length(char *row, int row_number, t_game *game)
 		game->map.diff = 1;
 }
 
+/* Checks if the map has valid characters and sets player position*/
 void	check_characters(char *row, int row_number, t_game *game)
 {
 	int	i;
@@ -68,6 +71,7 @@ void	check_characters(char *row, int row_number, t_game *game)
 	}
 }
 
+/* Checks if the map has valid borders */
 void	check_limits(char *row, int row_number, t_game *game)
 {
 	if (row_number == 1 || row_number == game->map.rows)
