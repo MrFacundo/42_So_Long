@@ -215,7 +215,7 @@ Binary files a/so_long and /dev/null differ
  	*dst = table;[m
  }[m
  [m
- int	open_and_check(int fd, char *file_path, t_game *game)[m
+ int	get_fd(int fd, char *file_path, t_game *game)[m
  {[m
 [31m-    fd = open(file_path, O_RDONLY);[m
 [32m+[m	[32mfd = open(file_path, O_RDONLY);[m
@@ -250,7 +250,7 @@ Binary files a/so_long and /dev/null differ
  [m
 [32m+[m	[32mfd = 0;[m
 [32m+[m	[32mrow = 0;[m
- 	fd = open_and_check(fd, map_file_path, game);[m
+ 	fd = get_fd(fd, map_file_path, game);[m
 [31m-    while (row = ft_get_next_line(fd))[m
 [31m-    {[m
 [31m-        free(row);[m
@@ -271,7 +271,7 @@ Binary files a/so_long and /dev/null differ
 [32m+[m	[32mclose(fd);[m
  	if (game->map.rows <3)[m
  		handle_error(game, MAP_ROWS);[m
- 	open_and_check(fd, map_file_path, game);[m
+ 	get_fd(fd, map_file_path, game);[m
 [31m-    i = 1;[m
 [31m-    while (row = ft_get_next_line(fd))[m
 [32m+[m	[32mi = 1;[m

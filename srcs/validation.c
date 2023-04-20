@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 14:25:48 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 17:02:02 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,7 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-static int	flood_fill(char **table, int y, int x, int *requirements)
-{
-	if (table[y][x] == '1')
-		return (0);
-	else if (table[y][x] == 'C')
-		requirements[1]++;
-	else if (table[y][x] == 'E')
-		requirements[0] = 1;
-	table[y][x] = '1';
-	flood_fill(table, y, x + 1, requirements);
-	flood_fill(table, y, x - 1, requirements);
-	flood_fill(table, y + 1, x, requirements);
-	flood_fill(table, y - 1, x, requirements);
-	return (0);
-}
-
+/*Performs main checks and initializes game, path check and reset tables*/
 void	validate_arg(int argc, char *argv, t_game *game)
 {
 	if (argc != 2)
@@ -38,6 +23,7 @@ void	validate_arg(int argc, char *argv, t_game *game)
 		handle_error(game, BAD_EXTENSION);
 	if (!map_is_valid(argv, game))
 		handle_error(game, BAD_ELEMENTS);
+	print_map_validation(game);
 	init_table(argv, game);
 	copy_table(game->table, &game->table_copy);
 	if (!paths_are_valid(game))
@@ -51,52 +37,33 @@ int	extension_is_valid(char *map_file_path)
 
 	extension = ft_strrchr(map_file_path, '.');
 	printf("extension: %s\n", extension);
-	if (!extension || ft_strncmp(extension, ".ber", 4 ))
+	if (!extension || ft_strncmp(extension, ".ber", 4))
 		return (0);
 	return (1);
 }
 
+/*Initializes and checks map data*/
 int	map_is_valid(char *map_file_path, t_game *game)
 {
 	int		fd;
-	int		i; 
+	int		i;
 	char	*row;
 
-	fd = 0;
-	row = 0;
-	fd = open_and_check(fd, map_file_path, game);
-	printf("row: %s\n", row);
-	while (1)
-	{
-		row = ft_get_next_line(fd);
-		if (!row)
-			break;
-		free(row);
-		game->map.rows++;
-	}
-	if (row)
-		free(row);
-	close(fd);
-	if (game->map.rows <3)
-		handle_error(game, MAP_ROWS);
-	open_and_check(fd, map_file_path, game);
+	set_map_rows(map_file_path, game);
+	fd = get_fd(map_file_path, game);
 	i = 1;
 	row = 0;
-	while (1)
+	row = ft_get_next_line(fd);
+	while (row)
 	{
-		row = ft_get_next_line(fd);
-		if (!row)
-			break;
 		check_row(row, i++, game);
 		free(row);
+		row = ft_get_next_line(fd);
 	}
-	if (row)
-		free(row);
 	close(fd);
-	print_map_validation(game);
-	if (!game->map.collectable_count ||
-		!game->map.exit_count ||
-		game->map.player_count != 1)
+	if (!game->map.collectable_count
+		|| !game->map.exit_count
+		|| game->map.player_count != 1)
 		return (0);
 	return (1);
 }
@@ -118,4 +85,20 @@ int	paths_are_valid(t_game *game)
 	if (!requirements[0] || requirements[1] != game->map.collectable_count)
 		return (0);
 	return (1);
+}
+
+int	flood_fill(char **table, int y, int x, int *requirements)
+{
+	if (table[y][x] == '1')
+		return (0);
+	else if (table[y][x] == 'C')
+		requirements[1]++;
+	else if (table[y][x] == 'E')
+		requirements[0] = 1;
+	table[y][x] = '1';
+	flood_fill(table, y, x + 1, requirements);
+	flood_fill(table, y, x - 1, requirements);
+	flood_fill(table, y + 1, x, requirements);
+	flood_fill(table, y - 1, x, requirements);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 14:37:02 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 17:18:30 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	main(int argc, char **argv)
 {
 	t_game	game;
-	
+
 	init_program(&game);
 	validate_arg(argc, argv[1], &game);
 	game.mlx_ptr = mlx_init();
@@ -30,7 +30,6 @@ int	main(int argc, char **argv)
 /* Input management. Called each time a key is pressed. */
 int	handle_key(int keycode, t_game *game)
 {
-	printf("keycode: %d\n", keycode);
 	if (keycode == ESC)
 		exit_game(game);
 	else if (keycode == RESET)
@@ -59,24 +58,24 @@ int	handle_key(int keycode, t_game *game)
 }
 
 /* Move the player to the next position. */
-void	move(t_game *game)
+void	move(t_game *g)
 {	
-	printf("move table %p\n", game->table);
-	print_table(game->table);
-	if (game->table[game->player.attempt.y][game->player.attempt.x] == COLLECTABLE)
-		game->player.collected += 1;
-	else if (game->table[game->player.attempt.y][game->player.attempt.x] == EXIT)
+	printf("move table %p\n", g->table);
+	print_table(g->table);
+	if (g->table[g->player.attempt.y][g->player.attempt.x] == COLL)
+		g->player.collected += 1;
+	else if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT)
 	{
-		render_game_over_message(game);
+		render_game_over_message(g);
 		return ;
 	}
-	game->player.moves += 1;
-	animate(game);
-	game->table[game->player.current.y][game->player.current.x] = FLOOR;
-	game->table[game->player.attempt.y][game->player.attempt.x] = PLAYER;
-	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
-	render_map(game);
-	render_counters(game);
+	g->player.moves += 1;
+	animate(g);
+	g->table[g->player.current.y][g->player.current.x] = FLOOR;
+	g->table[g->player.attempt.y][g->player.attempt.x] = PLAYER;
+	mlx_clear_window(g->mlx_ptr, g->window.win_ptr);
+	render_map(g);
+	render_counters(g);
 }
 
 /* Clears the window, resets the table and re-initializes the game. */
@@ -105,6 +104,8 @@ int	exit_game(t_game *game)
 	mlx_destroy_image(game->mlx_ptr, game->images.player1);
 	mlx_destroy_image(game->mlx_ptr, game->images.player2);
 	mlx_destroy_image(game->mlx_ptr, game->images.player3);
+	mlx_destroy_image(game->mlx_ptr, game->images.player_end);
+	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 14:26:42 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 17:20:32 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,15 @@ void	init_table(char *map_file, t_game *game)
 	if (!table)
 		handle_error(game, MALLOC_ERROR);
 	i = 0;
-	while ((table[i++] = ft_get_next_line(fd)));
+	table[i] = ft_get_next_line(fd);
+	while (table[i])
+		table[++i] = ft_get_next_line(fd);
 	close(fd);
 	game->table = table;
 	printf("init table %p\n", game->table);
 	print_table(game->table);
 }
+
 /* Creates pointers for the all images needed in the game */
 void	init_images(t_game *g)
 {
@@ -88,5 +91,6 @@ void	init_images(t_game *g)
 	g->images.player1 = f(g->mlx_ptr, "xpm/p1.xpm", &g->px, &g->px);
 	g->images.player2 = f(g->mlx_ptr, "xpm/p2.xpm", &g->px, &g->px);
 	g->images.player3 = f(g->mlx_ptr, "xpm/pcoll.xpm", &g->px, &g->px);
+	g->images.player_end = f(g->mlx_ptr, "xpm/p_end.xpm", &g->px, &g->px);
 	g->images.player = g->images.player1;
 }

@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 14:37:28 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 17:18:20 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 // map elements
 # define FLOOR '0'
 # define WALL '1'
-# define COLLECTABLE 'C'
+# define COLL 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
 
@@ -95,6 +95,8 @@ typedef struct s_img_ptrs
 	void	*player1;
 	void	*player2;
 	void	*player3;
+	void	*player_end;
+	void	**images_array;
 }	t_img_ptrs;
 
 typedef struct s_game
@@ -128,6 +130,7 @@ void		reset_game(t_game *game);
 int			exit_game(t_game *program);
 
 // map_checks.c
+void		set_map_rows(char *map_file_path, t_game *game);
 void		check_characters(char *row, int row_number, t_game *program);
 void		check_length(char *row, int row_number, t_game *program);
 void		check_limits(char *row, int row_number, t_game *program);
@@ -139,11 +142,10 @@ void		render_counters(t_game *program);
 void		render_game_over_message(t_game *g);
 void		animate(t_game *game);
 
-
 // utils.c
 void		free_table(char **tab);
 void		handle_error(t_game *program, char *message);
-int			open_and_check(int fd, char *map_file_path, t_game *program);
+int			get_fd(char *map_file_path, t_game *program);
 void		reset_player_location(t_game *game, int y, int x);
 void		copy_table(char **src, char ***dst);
 
@@ -152,6 +154,7 @@ void		validate_arg(int argc, char *argv, t_game *program);
 int			extension_is_valid(char *map_file_path);
 int			map_is_valid(char *map_file_path, t_game *program);
 int			paths_are_valid(t_game *game);
+int			flood_fill(char **table, int y, int x, int *requirements);
 
 // debug.c
 void		print_table(char **table_ptr);
