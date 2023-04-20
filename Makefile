@@ -5,8 +5,10 @@ HEADER			= -Iincludes
 LIBFT_DIR		= ./libft
 MINILIBX_DIR	= ./minilibx-linux
 CC 				= gcc
-CFLAGS_PROD 	= -g -Wall -Wextra -Werror
-LFLAGS		 	= -L$(MINILIBX_DIR) -lmlx -L$(LIBFT_DIR) -lft -lXext -lX11 -lm -lbsd
+CFLAGS_PROD 	= -g -Wall -Wextra -Werror -fsanitize=address
+LFLAGS		 	= -L$(MINILIBX_DIR) -lmlx -L$(LIBFT_DIR) -lft -lXext -lX11 -lm -lbsd -fsanitize=address
+
+# srcs/debug.c srcs/main.c srcs/utils.c srcs/validation.c srcs/init.c
 
 # --- COLORS ---
 

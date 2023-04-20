@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 17:34:27 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 14:26:42 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ void	init_program(t_game *game)
 	game->map.exit_count = 0;
 	game->map.invalid_char = 0;
 	game->map.invalid_limits = 0;
+	game->map.rows = 0;
+	game->map.player_count = 0;
 }
 
 /* Initializes game contect variables, renders images
 	and hooks key input to mlx_loop */
 void	init_game(t_game *game)
 {
-	game->map.player_count = 0;
 	game->player.collected = 0;
 	game->player.moves = 0;
 	game->game_over = 0;
@@ -81,7 +82,6 @@ void	init_images(t_game *g)
 	void	*(*f)(void *, char *, int *, int *);
 
 	f = mlx_xpm_file_to_image;
-	g->images.floor = f (g->mlx_ptr, "xpm/floor.xpm", &g->px, &g->px);
 	g->images.wall = f(g->mlx_ptr, "xpm/wall.xpm", &g->px, &g->px);
 	g->images.coll = f(g->mlx_ptr, "xpm/coll.xpm", &g->px, &g->px);
 	g->images.exit = f(g->mlx_ptr, "xpm/exit.xpm", &g->px, &g->px);

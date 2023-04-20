@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 16:07:00 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 14:25:48 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,32 +58,47 @@ int	extension_is_valid(char *map_file_path)
 
 int	map_is_valid(char *map_file_path, t_game *game)
 {
-    int		fd, i;
-    char	*row;
+	int		fd;
+	int		i; 
+	char	*row;
 
+	fd = 0;
+	row = 0;
 	fd = open_and_check(fd, map_file_path, game);
-    while (row = ft_get_next_line(fd))
-    {
-        free(row);
-        game->map.rows++;
-    }
-    close(fd);
+	printf("row: %s\n", row);
+	while (1)
+	{
+		row = ft_get_next_line(fd);
+		if (!row)
+			break;
+		free(row);
+		game->map.rows++;
+	}
+	if (row)
+		free(row);
+	close(fd);
 	if (game->map.rows <3)
 		handle_error(game, MAP_ROWS);
 	open_and_check(fd, map_file_path, game);
-    i = 1;
-    while (row = ft_get_next_line(fd))
+	i = 1;
+	row = 0;
+	while (1)
 	{
+		row = ft_get_next_line(fd);
+		if (!row)
+			break;
 		check_row(row, i++, game);
 		free(row);
 	}
-    close(fd);
-    print_map_validation(game);
-    if (!game->map.collectable_count ||
-        !game->map.exit_count ||
-        game->map.player_count != 1)
-        return (0);
-    return (1);
+	if (row)
+		free(row);
+	close(fd);
+	print_map_validation(game);
+	if (!game->map.collectable_count ||
+		!game->map.exit_count ||
+		game->map.player_count != 1)
+		return (0);
+	return (1);
 }
 
 int	paths_are_valid(t_game *game)
@@ -102,4 +117,5 @@ int	paths_are_valid(t_game *game)
 	printf("requirements[1]: %d\n", requirements[1]);
 	if (!requirements[0] || requirements[1] != game->map.collectable_count)
 		return (0);
+	return (1);
 }

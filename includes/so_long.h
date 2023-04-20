@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/19 15:39:13 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 14:37:28 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ typedef struct s_player
 
 typedef struct s_img_ptrs
 {
-	void	*floor;
 	void	*wall;
 	void	*coll;
 	void	*exit;

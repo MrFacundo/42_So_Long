@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:24 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 22:03:56 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/20 12:13:00 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,36 @@ void	free_table(char **tab)
     if (!tab)
 		return;
     while (tab[i])
-        free(tab[i++]);
+		free(tab[i++]);
    	free(tab);
 }
 
-void copy_table(char **src, char ***dst)
+void	copy_table(char **src, char ***dst)
 {
-    int	rows;
+	int	rows;
 	int	i;
 	char	**table;
-    
+
 	rows = 0;
 	i = 0;
-    while (src[rows])
-        rows++;
-    table = ft_calloc(rows + 1, sizeof(char *));
-    i = 0;
-    while (src[i])
-        table[i++] = ft_strdup(src[i]);
+	while (src[rows])
+		rows++;
+	table = ft_calloc(rows + 1, sizeof(char *));
+	i = 0;
+	while (src[i])
+	{
+		table[i] = ft_strdup(src[i]);
+		i++;
+	}
 	*dst = table;
 }
 
 int	open_and_check(int fd, char *file_path, t_game *game)
 {
-    fd = open(file_path, O_RDONLY);
+	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 		handle_error(game, strerror(errno));
+	return fd;
 }
 
 void	reset_player_location(t_game *game, int i, int j)

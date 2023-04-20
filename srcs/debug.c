@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:50:25 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/18 16:27:17 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 14:27:09 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	print_table(char **table_ptr)
 	int	i;
 	
 	i = 0;
-    while (table_ptr[i])
-        printf("%s", table_ptr[i++]);
+	while (table_ptr[i])
+		printf("%s", table_ptr[i++]);
 	printf("\n\n");
 }
 

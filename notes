@@ -2,4 +2,4 @@ git pull --recurse-submodules
 git submodule update --init
 
 
- ~/repo/c/so_long  main  valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./so_long maps/map_1.ber
+ valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s ./so_long maps/map_1.ber

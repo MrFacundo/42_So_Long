@@ -1,0 +1,311 @@
+[1mdiff --git a/Makefile b/Makefile[m
+[1mindex 333d2e2..13424ff 100644[m
+[1m--- a/Makefile[m
+[1m+++ b/Makefile[m
+[36m@@ -5,7 +5,7 @@[m [mHEADER			= -Iincludes[m
+ LIBFT_DIR		= ./libft[m
+ MINILIBX_DIR	= ./minilibx-linux[m
+ CC 				= gcc[m
+[31m-CFLAGS_PROD 	= -g -Wall -Wextra -Werror[m
+[32m+[m[32mCFLAGS_PROD 	= -g -Wall -Wextra -Werror -fsanitize=address[m
+ LFLAGS		 	= -L$(MINILIBX_DIR) -lmlx -L$(LIBFT_DIR) -lft -lXext -lX11 -lm -lbsd[m
+ [m
+ # --- COLORS ---[m
+[1mdiff --git a/includes/so_long.h b/includes/so_long.h[m
+[1mindex 542fb14..5953535 100644[m
+[1m--- a/includes/so_long.h[m
+[1m+++ b/includes/so_long.h[m
+[36m@@ -6,7 +6,7 @@[m
+ /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */[m
+ /*                                                +#+#+#+#+#+   +#+           */[m
+ /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */[m
+[31m-/*   Updated: 2023/04/19 15:39:13 by facundo          ###   ########.fr       */[m
+[32m+[m[32m/*   Updated: 2023/04/20 14:27:46 by facundo          ###   ########.fr       */[m
+ /*                                                                            */[m
+ /* ************************************************************************** */[m
+ [m
+[36m@@ -88,7 +88,6 @@[m [mtypedef struct s_player[m
+ [m
+ typedef struct s_img_ptrs[m
+ {[m
+[31m-	void	*floor;[m
+ 	void	*wall;[m
+ 	void	*coll;[m
+ 	void	*exit;[m
+[1mdiff --git a/notes b/notes[m
+[1mindex 4ad06e9..a22407e 100644[m
+[1m--- a/notes[m
+[1m+++ b/notes[m
+[36m@@ -2,4 +2,4 @@[m [mgit pull --recurse-submodules[m
+ git submodule update --init[m
+ [m
+ [m
+[31m- ~/repo/c/so_long  main  valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./so_long maps/map_1.ber[m
+\ No newline at end of file[m
+[32m+[m[32m valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s ./so_long maps/map_1.ber[m
+\ No newline at end of file[m
+[1mdiff --git a/so_long b/so_long[m
+[1mdeleted file mode 100755[m
+[1mindex 93ce29f..0000000[m
+Binary files a/so_long and /dev/null differ
+[1mdiff --git a/srcs/debug.c b/srcs/debug.c[m
+[1mindex d157957..644e4e1 100644[m
+[1m--- a/srcs/debug.c[m
+[1m+++ b/srcs/debug.c[m
+[36m@@ -6,7 +6,7 @@[m
+ /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */[m
+ /*                                                +#+#+#+#+#+   +#+           */[m
+ /*   Created: 2023/04/17 11:50:25 by facundo           #+#    #+#             */[m
+[31m-/*   Updated: 2023/04/18 16:27:17 by facundo          ###   ########.fr       */[m
+[32m+[m[32m/*   Updated: 2023/04/20 14:27:09 by facundo          ###   ########.fr       */[m
+ /*                                                                            */[m
+ /* ************************************************************************** */[m
+ [m
+[36m@@ -19,8 +19,8 @@[m [mvoid	print_table(char **table_ptr)[m
+ 	int	i;[m
+ 	[m
+ 	i = 0;[m
+[31m-    while (table_ptr[i])[m
+[31m-        printf("%s", table_ptr[i++]);[m
+[32m+[m	[32mwhile (table_ptr[i])[m
+[32m+[m		[32mprintf("%s", table_ptr[i++]);[m
+ 	printf("\n\n");[m
+ }[m
+ [m
+[1mdiff --git a/srcs/init.c b/srcs/init.c[m
+[1mindex 2b01101..6aa89d8 100644[m
+[1m--- a/srcs/init.c[m
+[1m+++ b/srcs/init.c[m
+[36m@@ -6,7 +6,7 @@[m
+ /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */[m
+ /*                                                +#+#+#+#+#+   +#+           */[m
+ /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */[m
+[31m-/*   Updated: 2023/04/19 17:34:27 by facundo          ###   ########.fr       */[m
+[32m+[m[32m/*   Updated: 2023/04/20 14:26:42 by facundo          ###   ########.fr       */[m
+ /*                                                                            */[m
+ /* ************************************************************************** */[m
+ [m
+[36m@@ -25,13 +25,14 @@[m [mvoid	init_program(t_game *game)[m
+ 	game->map.exit_count = 0;[m
+ 	game->map.invalid_char = 0;[m
+ 	game->map.invalid_limits = 0;[m
+[32m+[m	[32mgame->map.rows = 0;[m
+[32m+[m	[32mgame->map.player_count = 0;[m
+ }[m
+ [m
+ /* Initializes game contect variables, renders images[m
+ 	and hooks key input to mlx_loop */[m
+ void	init_game(t_game *game)[m
+ {[m
+[31m-	game->map.player_count = 0;[m
+ 	game->player.collected = 0;[m
+ 	game->player.moves = 0;[m
+ 	game->game_over = 0;[m
+[36m@@ -81,7 +82,6 @@[m [mvoid	init_images(t_game *g)[m
+ 	void	*(*f)(void *, char *, int *, int *);[m
+ [m
+ 	f = mlx_xpm_file_to_image;[m
+[31m-	g->images.floor = f (g->mlx_ptr, "xpm/floor.xpm", &g->px, &g->px);[m
+ 	g->images.wall = f(g->mlx_ptr, "xpm/wall.xpm", &g->px, &g->px);[m
+ 	g->images.coll = f(g->mlx_ptr, "xpm/coll.xpm", &g->px, &g->px);[m
+ 	g->images.exit = f(g->mlx_ptr, "xpm/exit.xpm", &g->px, &g->px);[m
+[1mdiff --git a/srcs/main.c b/srcs/main.c[m
+[1mindex 6b3b051..94a4e84 100644[m
+[1m--- a/srcs/main.c[m
+[1m+++ b/srcs/main.c[m
+[36m@@ -6,7 +6,7 @@[m
+ /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */[m
+ /*                                                +#+#+#+#+#+   +#+           */[m
+ /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */[m
+[31m-/*   Updated: 2023/04/19 17:24:35 by facundo          ###   ########.fr       */[m
+[32m+[m[32m/*   Updated: 2023/04/20 14:26:06 by facundo          ###   ########.fr       */[m
+ /*                                                                            */[m
+ /* ************************************************************************** */[m
+ [m
+[36m@@ -21,7 +21,7 @@[m [mint	main(int argc, char **argv)[m
+ 	init_program(&game);[m
+ 	validate_arg(argc, argv[1], &game);[m
+ 	game.mlx_ptr = mlx_init();[m
+[31m-	game.window = init_window(game, "So Long");[m
+[32m+[m	[32mgame.window = init_window(game, "so long");[m
+ 	init_images(&game);[m
+ 	init_game(&game);[m
+ 	return (0);[m
+[36m@@ -94,10 +94,25 @@[m [mint	exit_game(t_game *game)[m
+ {[m
+ 	printf("closing...");[m
+ 	if (game->table)[m
+[31m-		// free_table(game->table);[m
+[32m+[m		[32mfree_table(game->table);[m
+ 	if (game->table_copy)[m
+[31m-		// free_table(game->table_copy);[m
+[32m+[m		[32mfree_table(game->table_copy);[m
+ 	if (game->window.win_ptr)[m
+ 		mlx_destroy_window(game->mlx_ptr, game->window.win_ptr);[m
+[32m+[m	[32mmlx_destroy_image(game->mlx_ptr, game->images.wall);[m
+[32m+[m	[32mmlx_destroy_image(game->mlx_ptr, game->images.coll);[m
+[32m+[m	[32mmlx_destroy_image(game->mlx_ptr, game->images.exit);[m
+[32m+[m	[32m// mlx_destroy_image(game->mlx_ptr, game->images.player);[m
+[32m+[m	[32mmlx_destroy_image(game->mlx_ptr, game->images.player1);[m
+[32m+[m	[32mmlx_destroy_image(game->mlx_ptr, game->images.player2);[m
+[32m+[m	[32mmlx_destroy_image(game->mlx_ptr, game->images.player3);[m
+[32m+[m	[32mfree(game->mlx_ptr);[m
+[32m+[m[32m/* 	free(game->images.wall);[m
+[32m+[m	[32mfree(game->images.coll);[m
+[32m+[m	[32mfree(game->images.exit);[m
+[32m+[m	[32m// free(game->images.player);[m
+[32m+[m	[32m// free(game->images.player1);[m
+[32m+[m	[32mfree(game->images.player2);[m
+[32m+[m	[32mfree(game->images.player3); */[m
+ 	exit(0);[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/srcs/utils.c b/srcs/utils.c[m
+[1mindex 310e4ae..47c660e 100644[m
+[1m--- a/srcs/utils.c[m
+[1m+++ b/srcs/utils.c[m
+[36m@@ -3,10 +3,10 @@[m
+ /*                                                        :::      ::::::::   */[m
+ /*   utils.c                                            :+:      :+:    :+:   */[m
+ /*                                                    +:+ +:+         +:+     */[m
+[31m-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */[m
+[32m+[m[32m/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */[m
+ /*                                                +#+#+#+#+#+   +#+           */[m
+ /*   Created: 2023/04/17 11:48:24 by facundo           #+#    #+#             */[m
+[31m-/*   Updated: 2023/04/18 22:03:56 by ftroiter         ###   ########.fr       */[m
+[32m+[m[32m/*   Updated: 2023/04/20 12:13:00 by facundo          ###   ########.fr       */[m
+ /*                                                                            */[m
+ /* ************************************************************************** */[m
+ [m
+[36m@@ -22,32 +22,36 @@[m [mvoid	free_table(char **tab)[m
+     if (!tab)[m
+ 		return;[m
+     while (tab[i])[m
+[31m-        free(tab[i++]);[m
+[32m+[m		[32mfree(tab[i++]);[m
+    	free(tab);[m
+ }[m
+ [m
+[31m-void copy_table(char **src, char ***dst)[m
+[32m+[m[32mvoid	copy_table(char **src, char ***dst)[m
+ {[m
+[31m-    int	rows;[m
+[32m+[m	[32mint	rows;[m
+ 	int	i;[m
+ 	char	**table;[m
+[31m-    [m
+[32m+[m
+ 	rows = 0;[m
+ 	i = 0;[m
+[31m-    while (src[rows])[m
+[31m-        rows++;[m
+[31m-    table = ft_calloc(rows + 1, sizeof(char *));[m
+[31m-    i = 0;[m
+[31m-    while (src[i])[m
+[31m-        table[i++] = ft_strdup(src[i]);[m
+[32m+[m	[32mwhile (src[rows])[m
+[32m+[m		[32mrows++;[m
+[32m+[m	[32mtable = ft_calloc(rows + 1, sizeof(char *));[m
+[32m+[m	[32mi = 0;[m
+[32m+[m	[32mwhile (src[i])[m
+[32m+[m	[32m{[m
+[32m+[m		[32mtable[i] = ft_strdup(src[i]);[m
+[32m+[m		[32mi++;[m
+[32m+[m	[32m}[m
+ 	*dst = table;[m
+ }[m
+ [m
+ int	open_and_check(int fd, char *file_path, t_game *game)[m
+ {[m
+[31m-    fd = open(file_path, O_RDONLY);[m
+[32m+[m	[32mfd = open(file_path, O_RDONLY);[m
+ 	if (fd == -1)[m
+ 		handle_error(game, strerror(errno));[m
+[32m+[m	[32mreturn fd;[m
+ }[m
+ [m
+ void	reset_player_location(t_game *game, int i, int j)[m
+[1mdiff --git a/srcs/validation.c b/srcs/validation.c[m
+[1mindex 4ab9684..e732a0d 100644[m
+[1m--- a/srcs/validation.c[m
+[1m+++ b/srcs/validation.c[m
+[36m@@ -6,7 +6,7 @@[m
+ /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */[m
+ /*                                                +#+#+#+#+#+   +#+           */[m
+ /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */[m
+[31m-/*   Updated: 2023/04/19 16:07:00 by facundo          ###   ########.fr       */[m
+[32m+[m[32m/*   Updated: 2023/04/20 14:25:48 by facundo          ###   ########.fr       */[m
+ /*                                                                            */[m
+ /* ************************************************************************** */[m
+ [m
+[36m@@ -58,32 +58,47 @@[m [mint	extension_is_valid(char *map_file_path)[m
+ [m
+ int	map_is_valid(char *map_file_path, t_game *game)[m
+ {[m
+[31m-    int		fd, i;[m
+[31m-    char	*row;[m
+[32m+[m	[32mint		fd;[m
+[32m+[m	[32mint		i;[m[41m [m
+[32m+[m	[32mchar	*row;[m
+ [m
+[32m+[m	[32mfd = 0;[m
+[32m+[m	[32mrow = 0;[m
+ 	fd = open_and_check(fd, map_file_path, game);[m
+[31m-    while (row = ft_get_next_line(fd))[m
+[31m-    {[m
+[31m-        free(row);[m
+[31m-        game->map.rows++;[m
+[31m-    }[m
+[31m-    close(fd);[m
+[32m+[m	[32mprintf("row: %s\n", row);[m
+[32m+[m	[32mwhile (1)[m
+[32m+[m	[32m{[m
+[32m+[m		[32mrow = ft_get_next_line(fd);[m
+[32m+[m		[32mif (!row)[m
+[32m+[m			[32mbreak;[m
+[32m+[m		[32mfree(row);[m
+[32m+[m		[32mgame->map.rows++;[m
+[32m+[m	[32m}[m
+[32m+[m	[32mif (row)[m
+[32m+[m		[32mfree(row);[m
+[32m+[m	[32mclose(fd);[m
+ 	if (game->map.rows <3)[m
+ 		handle_error(game, MAP_ROWS);[m
+ 	open_and_check(fd, map_file_path, game);[m
+[31m-    i = 1;[m
+[31m-    while (row = ft_get_next_line(fd))[m
+[32m+[m	[32mi = 1;[m
+[32m+[m	[32mrow = 0;[m
+[32m+[m	[32mwhile (1)[m
+ 	{[m
+[32m+[m		[32mrow = ft_get_next_line(fd);[m
+[32m+[m		[32mif (!row)[m
+[32m+[m			[32mbreak;[m
+ 		check_row(row, i++, game);[m
+ 		free(row);[m
+ 	}[m
+[31m-    close(fd);[m
+[31m-    print_map_validation(game);[m
+[31m-    if (!game->map.collectable_count ||[m
+[31m-        !game->map.exit_count ||[m
+[31m-        game->map.player_count != 1)[m
+[31m-        return (0);[m
+[31m-    return (1);[m
+[32m+[m	[32mif (row)[m
+[32m+[m		[32mfree(row);[m
+[32m+[m	[32mclose(fd);[m
+[32m+[m	[32mprint_map_validation(game);[m
+[32m+[m	[32mif (!game->map.collectable_count ||[m
+[32m+[m		[32m!game->map.exit_count ||[m
+[32m+[m		[32mgame->map.player_count != 1)[m
+[32m+[m		[32mreturn (0);[m
+[32m+[m	[32mreturn (1);[m
+ }[m
+ [m
+ int	paths_are_valid(t_game *game)[m
+[36m@@ -102,4 +117,5 @@[m [mint	paths_are_valid(t_game *game)[m
+ 	printf("requirements[1]: %d\n", requirements[1]);[m
+ 	if (!requirements[0] || requirements[1] != game->map.collectable_count)[m
+ 		return (0);[m
+[32m+[m	[32mreturn (1);[m
+ }[m
