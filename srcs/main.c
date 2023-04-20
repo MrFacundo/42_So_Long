@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 17:18:30 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 20:13:04 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,21 +91,28 @@ void	reset_game(t_game *game)
 /* Frees the tables and exits the program. */
 int	exit_game(t_game *game)
 {
-	printf("closing...");
+	printf("closing...\n");
+	printf("game->image_load_success %d\n", game->image_load_success);
 	if (game->table)
 		free_table(game->table);
 	if (game->table_copy)
 		free_table(game->table_copy);
 	if (game->window.win_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->window.win_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->images.wall);
-	mlx_destroy_image(game->mlx_ptr, game->images.coll);
-	mlx_destroy_image(game->mlx_ptr, game->images.exit);
-	mlx_destroy_image(game->mlx_ptr, game->images.player1);
-	mlx_destroy_image(game->mlx_ptr, game->images.player2);
-	mlx_destroy_image(game->mlx_ptr, game->images.player3);
-	mlx_destroy_image(game->mlx_ptr, game->images.player_end);
-	mlx_destroy_display(game->mlx_ptr);
-	free(game->mlx_ptr);
+	if (game->image_load_success)
+	{
+		mlx_destroy_image(game->mlx_ptr, game->images.wall);
+		mlx_destroy_image(game->mlx_ptr, game->images.coll);
+		mlx_destroy_image(game->mlx_ptr, game->images.exit);
+		mlx_destroy_image(game->mlx_ptr, game->images.player1);
+		mlx_destroy_image(game->mlx_ptr, game->images.player2);
+		mlx_destroy_image(game->mlx_ptr, game->images.player3);
+		mlx_destroy_image(game->mlx_ptr, game->images.player_end);
+	}
+	if (game->mlx_ptr)
+	{
+		mlx_destroy_display(game->mlx_ptr);
+		free(game->mlx_ptr);
+	}
 	exit(0);
 }

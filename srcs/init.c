@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 17:20:32 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 20:04:46 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_program(t_game *game)
 	game->window.win_ptr = 0;
 	game->px = 32;
 	game->table = 0;
+	game->image_load_success = 0;	
 	game->map.diff = 0;
 	game->map.collectable_count = 0;
 	game->map.exit_count = 0;
@@ -86,11 +87,26 @@ void	init_images(t_game *g)
 
 	f = mlx_xpm_file_to_image;
 	g->images.wall = f(g->mlx_ptr, "xpm/wall.xpm", &g->px, &g->px);
+	if (!g->images.wall)
+		handle_error(g, IMG_ERROR);
 	g->images.coll = f(g->mlx_ptr, "xpm/coll.xpm", &g->px, &g->px);
+	if (!g->images.coll)
+		handle_error(g, IMG_ERROR);
 	g->images.exit = f(g->mlx_ptr, "xpm/exit.xpm", &g->px, &g->px);
+	if (!g->images.exit)
+		handle_error(g, IMG_ERROR);
 	g->images.player1 = f(g->mlx_ptr, "xpm/p1.xpm", &g->px, &g->px);
+	if (!g->images.player1)
+		handle_error(g, IMG_ERROR);
 	g->images.player2 = f(g->mlx_ptr, "xpm/p2.xpm", &g->px, &g->px);
+	if (!g->images.player2)
+		handle_error(g, IMG_ERROR);
 	g->images.player3 = f(g->mlx_ptr, "xpm/pcoll.xpm", &g->px, &g->px);
+	if (!g->images.player3)
+		handle_error(g, IMG_ERROR);
 	g->images.player_end = f(g->mlx_ptr, "xpm/p_end.xpm", &g->px, &g->px);
+	if (!g->images.player_end)
+		handle_error(g, IMG_ERROR);
 	g->images.player = g->images.player1;
+	g->image_load_success = 1;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 17:18:20 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/20 20:04:14 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define MAP_CHAR "Strange chars in map m8"
 # define MAP_LIMITS "Walls are all wrong m8"
 # define BAD_PATH "No valid path to exit m8"
+# define IMG_ERROR "Image loading issues"
 
 // game messages
 # define WIN_MSG "You win!"
@@ -106,6 +107,7 @@ typedef struct s_game
 	t_window	window;
 	t_map		map;
 	t_img_ptrs	images;
+	int			image_load_success;
 	char		**table;
 	char		**table_copy;
 	char		**table_copy2;
