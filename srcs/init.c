@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 20:04:46 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:55:44 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 void	init_program(t_game *game)
 {
 	game->window.win_ptr = 0;
+	game->mlx_ptr = 0;
 	game->px = 32;
 	game->table = 0;
+	game->table_copy = 0;
 	game->image_load_success = 0;	
 	game->map.diff = 0;
 	game->map.collectable_count = 0;
@@ -47,7 +49,7 @@ t_window	init_window(t_game game, char *name)
 {
 	t_window	window;
 
-	window.size.x = game.map.cols * game.px;
+	window.size.x = game.map.cols * game.px + game.px;
 	window.size.y = game.map.rows * game.px;
 	window.win_ptr = mlx_new_window(game.mlx_ptr,
 			window.size.x,

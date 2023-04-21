@@ -8,8 +8,6 @@ CC 				= gcc
 CFLAGS_PROD 	= -g -Wall -Wextra -Werror
 LFLAGS		 	= -L$(MINILIBX_DIR) -lmlx -L$(LIBFT_DIR) -lft -lXext -lX11 -lm -lbsd
 
-# srcs/debug.c srcs/main.c srcs/utils.c srcs/validation.c srcs/init.c
-
 # --- COLORS ---
 
 NONE=\033[0m
@@ -46,14 +44,21 @@ clean:
 fclean:	clean
 		@echo "$(RED)Deleting everything! ( ͡° ͜ʖ ͡°) $(NONE)"
 		rm -f $(NAME) $(OBJECTS) libft/libft.a
-		
+
 show:
 		@printf "NAME	: $(NAME)\n"
 		@printf "CC	: $(CC)\n"
-		@printf "CFLAGS	: $(CFLAGS_DEV)\n"
+		@printf "CFLAGS	: $(CFLAGS_PROD)\n"
 		@printf "LFLAGS	: $(LFLAGS)\n"
-		@printf "SRC	: $(SRC)\n"
-		@printf "OBJ	: $(OBJ)\n"
+		@printf "SOURCES	: $(SOURCES)\n"
+
+doadance:
+		@echo "\033[33;1m8====D\033[0m"
+		@sleep 0.5
+		@echo "\033[33;1m8===D~~~  \033[0m"
+		@sleep 0.5
+		@echo "\033[33;1m8===D  ~~~\033[0m\033[33;1m\o/\o/\033[0m"
+
 
 restart: all
 		./so_long maps/map_1.ber

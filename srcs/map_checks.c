@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:57 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 18:48:16 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:49:25 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,21 @@ void	check_row(char *row, int row_number, t_game *game)
 	check_length(row, row_number, game);
 	if (game->map.diff)
 		handle_error(game, MAP_SHAPE);
-	check_characters(row, row_number, game);
-	if (game->map.invalid_char)
-		handle_error(game, MAP_CHAR);
 	check_limits(row, row_number, game);
 	if (game->map.invalid_limits)
 		handle_error(game, MAP_LIMITS);
+	check_characters(row, row_number, game);
+	if (game->map.invalid_char)
+		handle_error(game, MAP_CHAR);
 }
 
 /* Checks if the map is rectangular */
 void	check_length(char *row, int row_number, t_game *game)
 {
 	int	cols;
-
-	cols = (int)ft_strlen(row) - (int)ft_strlen(ft_strchr(row, '\n'));
 	printf("row: %s", row);
 	printf("(int)ft_strlen(row): %d\n", (int)ft_strlen(row));
+	cols = (int)ft_strlen(row);
 	printf("cols: %d\n", cols);
 	if (row_number == 1)
 		game->map.cols = cols;
@@ -95,6 +94,7 @@ void	check_characters(char *row, int row_number, t_game *game)
 /* Checks if the map has valid borders */
 void	check_limits(char *row, int row_number, t_game *game)
 {
+
 	if (row_number == 1 || row_number == game->map.rows)
 	{
 		while (*row)

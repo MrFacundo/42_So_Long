@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 20:04:14 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/21 12:39:28 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define MAP_SHAPE "Map's all weird wtf"
 # define MAP_ROWS "Min 3 rows m8"
 # define MAP_CHAR "Strange chars in map m8"
-# define MAP_LIMITS "Walls are all wrong m8"
+# define MAP_LIMITS "Map borders are all wrong m8"
 # define BAD_PATH "No valid path to exit m8"
 # define IMG_ERROR "Image loading issues"
 

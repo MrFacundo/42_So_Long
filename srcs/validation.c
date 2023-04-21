@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 17:02:02 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:48:52 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	map_is_valid(char *map_file_path, t_game *game)
 	int		fd;
 	int		i;
 	char	*row;
+	char	*trimmed_row;
 
 	set_map_rows(map_file_path, game);
 	fd = get_fd(map_file_path, game);
@@ -56,13 +57,15 @@ int	map_is_valid(char *map_file_path, t_game *game)
 	row = ft_get_next_line(fd);
 	while (row)
 	{
-		check_row(row, i++, game);
+		trimmed_row = ft_strtrim(row, "\n\r");
 		free(row);
+		check_row(trimmed_row, i++, game);
+		free(trimmed_row);
 		row = ft_get_next_line(fd);
 	}
 	close(fd);
 	if (!game->map.collectable_count
-		|| !game->map.exit_count
+		|| game->map.exit_count != 1
 		|| game->map.player_count != 1)
 		return (0);
 	return (1);
