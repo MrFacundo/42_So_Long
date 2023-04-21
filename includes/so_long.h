@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/21 12:39:28 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:35:59 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define COLL 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
+# define ENEMY 'V'
 
 // error messages
 # define BAD_ARGS "Bad args m8"
@@ -74,6 +75,7 @@ typedef struct s_map
 	int	diff;
 	int	exit_count;
 	int	player_count;
+	int	enemy_count;
 	int	collectable_count;
 	int	invalid_char;
 	int	invalid_limits;
@@ -87,6 +89,11 @@ typedef struct s_player
 	t_vector	current;
 }	t_player;
 
+typedef struct s_enemy
+{
+	t_vector	actual;
+}	t_enemy;
+
 typedef struct s_img_ptrs
 {
 	void	*wall;
@@ -97,7 +104,9 @@ typedef struct s_img_ptrs
 	void	*player2;
 	void	*player3;
 	void	*player_end;
-	void	**images_array;
+	void	*enemy;
+	void	*enemy1;
+	void	*enemy2;
 }	t_img_ptrs;
 
 typedef struct s_game
@@ -112,6 +121,7 @@ typedef struct s_game
 	char		**table_copy;
 	char		**table_copy2;
 	t_player	player;
+	t_enemy		*enemies;
 	int			game_over;
 }	t_game;
 

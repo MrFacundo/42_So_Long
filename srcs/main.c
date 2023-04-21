@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/21 12:06:30 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:14:20 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void	move(t_game *g)
 	print_table(g->table);
 	if (g->table[g->player.attempt.y][g->player.attempt.x] == COLL)
 		g->player.collected += 1;
-	else if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT)
+	else if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT
+	|| g->table[g->player.attempt.y][g->player.attempt.x] == ENEMY)
 	{
 		render_game_over_message(g);
 		return ;

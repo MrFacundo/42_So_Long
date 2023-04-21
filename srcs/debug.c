@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:50:25 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 16:14:55 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:38:24 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	print_map_validation(t_game *game)
 	printf("game->map.collectable_count %d\n", game->map.collectable_count);
 	printf("game->map.exit_count %d\n", game->map.exit_count);
 	printf("game->map.player_count %d\n", game->map.player_count);
+	printf("game->map.player_count %d\n", game->map.enemy_count);
 	printf("game->map.invalid_char %d\n", game->map.invalid_char);
 	printf("game->map.invalid_limits %d\n", game->map.invalid_limits);
 }

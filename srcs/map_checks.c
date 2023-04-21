@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:57 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/21 16:49:25 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:38:24 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,15 @@ void	check_characters(char *row, int row_number, t_game *game)
 			game->map.collectable_count++;
 		else if (row[i] == 'E')
 			game->map.exit_count++;
+		else if (row[i] == 'V')
+			game->map.enemy_count++;
 		else if (row[i] == 'P')
 		{
 			game->player.current.y = row_number - 1;
 			game->player.current.x = i;
 			game->map.player_count++;
 		}
-		else if (row[i] == '0' || row[i] == '1' || row[i] == '\n')
+		else if (row[i] == '0' || row[i] == '1' || row[i] == 'V')
 			;
 		else
 		{
@@ -99,13 +101,11 @@ void	check_limits(char *row, int row_number, t_game *game)
 	{
 		while (*row)
 		{
-			if (*row != WALL && *row != '\n')
+			if (*row != WALL)
 				game->map.invalid_limits = 1;
 			row++;
 		}
 	}
-	else if (row[0] != WALL
-		|| (row[game->map.cols - 1] != WALL
-			&& row[game->map.cols - 1] != '\n'))
+	else if (row[0] != WALL || row[game->map.cols - 1] != WALL)
 		game->map.invalid_limits = 1;
 }

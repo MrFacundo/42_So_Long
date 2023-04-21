@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/21 15:55:44 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:36:32 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	init_program(t_game *game)
 	game->map.invalid_limits = 0;
 	game->map.rows = 0;
 	game->map.player_count = 0;
+	game->map.enemy_count = 0;
 }
 
 /* Initializes game contect variables, renders images
@@ -110,5 +111,13 @@ void	init_images(t_game *g)
 	if (!g->images.player_end)
 		handle_error(g, IMG_ERROR);
 	g->images.player = g->images.player1;
+	g->images.enemy1 = f(g->mlx_ptr, "xpm/vs1.xpm", &g->px, &g->px);
+	if (!g->images.enemy1)
+		handle_error(g, IMG_ERROR);
+	g->images.enemy2 = f(g->mlx_ptr, "xpm/vs2.xpm", &g->px, &g->px);
+	if (!g->images.enemy2)
+		handle_error(g, IMG_ERROR);
+	g->images.enemy = g->images.enemy1;
 	g->image_load_success = 1;
+	printf("image_load_success = %d", g->image_load_success);
 }

@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:12 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 17:28:02 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:08:33 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	render_map_element(t_game *g, int i, int j)
 		f(g->mlx_ptr, g->window.win_ptr, g->images.coll, x, y);
 	else if (g->table[i][j] == EXIT)
 		f(g->mlx_ptr, g->window.win_ptr, g->images.exit, x, y);
+	else if (g->table[i][j] == ENEMY)
+		f(g->mlx_ptr, g->window.win_ptr, g->images.enemy, x, y);
 	else if (g->table[i][j] == PLAYER)
 	{
 		reset_player_location(g, i, j);
