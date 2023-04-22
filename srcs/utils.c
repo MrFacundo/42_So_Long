@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:24 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/20 16:33:36 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/22 17:16:35 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 #include "../libft/libft.h"
 #include "../includes/so_long.h"
 
-void	free_table(char **tab)
+void	free_table(char ***tab_ptr)
 {
-	int	i;
+	char	**tab;
+	int		i;
 
+	tab = *tab_ptr;
 	printf("freeing table\n");
 	i = 0;
 	if (!tab)
@@ -25,6 +27,7 @@ void	free_table(char **tab)
 	while (tab[i])
 		free(tab[i++]);
 	free(tab);
+	*tab_ptr = 0;
 }
 
 void	copy_table(char **src, char ***dst)
@@ -57,7 +60,7 @@ int	get_fd(char *file_path, t_game *game)
 	return (fd);
 }
 
-void	reset_player_location(t_game *game, int i, int j)
+void	reset_player_position(t_game *game, int i, int j)
 {
 	game->player.current.x = j;
 	game->player.current.y = i;

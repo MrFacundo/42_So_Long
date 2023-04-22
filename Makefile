@@ -45,6 +45,9 @@ fclean:	clean
 		@echo "$(RED)Deleting everything! ( ͡° ͜ʖ ͡°) $(NONE)"
 		rm -f $(NAME) $(OBJECTS) libft/libft.a
 
+kill:
+		kill -9 $$(pidof so_long)
+
 show:
 		@printf "NAME	: $(NAME)\n"
 		@printf "CC	: $(CC)\n"

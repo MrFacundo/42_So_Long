@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:57 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/21 17:38:24 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/22 17:16:04 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void	check_row(char *row, int row_number, t_game *game)
 void	check_length(char *row, int row_number, t_game *game)
 {
 	int	cols;
-	printf("row: %s", row);
-	printf("(int)ft_strlen(row): %d\n", (int)ft_strlen(row));
+
 	cols = (int)ft_strlen(row);
 	printf("cols: %d\n", cols);
 	if (row_number == 1)
@@ -85,10 +84,7 @@ void	check_characters(char *row, int row_number, t_game *game)
 		else if (row[i] == '0' || row[i] == '1' || row[i] == 'V')
 			;
 		else
-		{
-			printf("Invalid character: %c\n", row[i]);
 			game->map.invalid_char = 1;
-		}
 		i++;
 	}
 }
@@ -96,7 +92,6 @@ void	check_characters(char *row, int row_number, t_game *game)
 /* Checks if the map has valid borders */
 void	check_limits(char *row, int row_number, t_game *game)
 {
-
 	if (row_number == 1 || row_number == game->map.rows)
 	{
 		while (*row)

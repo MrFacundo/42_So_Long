@@ -224,7 +224,7 @@ Binary files a/so_long and /dev/null differ
 [32m+[m	[32mreturn fd;[m
  }[m
  [m
- void	reset_player_location(t_game *game, int i, int j)[m
+ void	reset_player_position(t_game *game, int i, int j)[m
 [1mdiff --git a/srcs/validation.c b/srcs/validation.c[m
 [1mindex 4ab9684..e732a0d 100644[m
 [1m--- a/srcs/validation.c[m

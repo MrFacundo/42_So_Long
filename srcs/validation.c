@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/21 16:48:52 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/22 16:17:37 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	paths_are_valid(t_game *game)
 	requirements[0] = 0;
 	requirements[1] = 0;
 	flood_fill(game->table_copy, y, x, requirements);
-	free_table(game->table_copy);
+	free_table(&game->table_copy);
 	printf("requirements[0]: %d\n", requirements[0]);
 	printf("requirements[1]: %d\n", requirements[1]);
 	if (!requirements[0] || requirements[1] != game->map.collectable_count)
@@ -92,7 +92,7 @@ int	paths_are_valid(t_game *game)
 
 int	flood_fill(char **table, int y, int x, int *requirements)
 {
-	if (table[y][x] == '1')
+	if (table[y][x] == '1' || table[y][x] == 'V')
 		return (0);
 	else if (table[y][x] == 'C')
 		requirements[1]++;

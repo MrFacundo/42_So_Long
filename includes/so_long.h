@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/21 17:35:59 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/22 16:10:19 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@
 // game messages
 # define WIN_MSG "You win!"
 # define LOSE_MSG "Game Over"
-# define RESET_MSG "Press F to pay respects"
+# define RESET_MSG_1 "Press F to restart"
+# define RESET_MSG_2 "Press F to pay respects"
 
 // colors
 # define YELLOW 0x008fce00
@@ -91,7 +92,7 @@ typedef struct s_player
 
 typedef struct s_enemy
 {
-	t_vector	actual;
+	t_vector	current;
 }	t_enemy;
 
 typedef struct s_img_ptrs
@@ -151,14 +152,14 @@ void		check_row(char *row, int row_number, t_game *program);
 // render.c
 void		render_map(t_game *program);
 void		render_counters(t_game *program);
-void		render_game_over_message(t_game *g);
+void		render_game_over_message(t_game *g, int condition);
 void		animate(t_game *game);
 
 // utils.c
-void		free_table(char **tab);
+void		free_table(char ***tab);
 void		handle_error(t_game *program, char *message);
 int			get_fd(char *map_file_path, t_game *program);
-void		reset_player_location(t_game *game, int y, int x);
+void		reset_player_position(t_game *game, int y, int x);
 void		copy_table(char **src, char ***dst);
 
 // validation.c
@@ -171,5 +172,11 @@ int			flood_fill(char **table, int y, int x, int *requirements);
 // debug.c
 void		print_table(char **table_ptr);
 void		print_map_validation(t_game *program);
+
+// enemy.c
+void	init_enemies(t_game *game);
+int		reset_enemy_position(t_game *g, int i, int j, int k);
+void	move_enemies(t_game *g);
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/21 17:14:20 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/22 17:33:22 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ int	handle_key(int keycode, t_game *game)
 		else
 			return (0);
 		if (game->table[game->player.attempt.y][game->player.attempt.x] != WALL)
+		{
 			move(game);
+			move_enemies(game);
+		}
 		else
 		{
 			game->player.attempt.x = game->player.current.x;
@@ -64,10 +67,14 @@ void	move(t_game *g)
 	print_table(g->table);
 	if (g->table[g->player.attempt.y][g->player.attempt.x] == COLL)
 		g->player.collected += 1;
-	else if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT
-	|| g->table[g->player.attempt.y][g->player.attempt.x] == ENEMY)
+	else if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT)
 	{
-		render_game_over_message(g);
+		render_game_over_message(g, 1);
+		return ;
+	}
+	else if (g->table[g->player.attempt.y][g->player.attempt.x] == ENEMY)
+	{
+		render_game_over_message(g, 0);
 		return ;
 	}
 	g->player.moves += 1;
@@ -84,7 +91,7 @@ void	reset_game(t_game *game)
 {
 	printf("reset game\n");
 	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
-	free_table(game->table);
+	free_table(&game->table);
 	copy_table(game->table_copy, &game->table);
 	init_game(game);
 }
@@ -93,11 +100,10 @@ void	reset_game(t_game *game)
 int	exit_game(t_game *game)
 {
 	printf("closing...\n");
-	printf("game->image_load_success %d\n", game->image_load_success);
 	if (game->table)
-		free_table(game->table);
+		free_table(&game->table);
 	if (game->table_copy)
-		free_table(game->table_copy);
+		free_table(&game->table_copy);
 	if (game->window.win_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->window.win_ptr);
 	if (game->image_load_success)
@@ -115,5 +121,34 @@ int	exit_game(t_game *game)
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);
 	}
+	if (game->enemies)
+		free(game->enemies);
 	exit(0);
 }
+
+
+// int handle_key(int keycode, t_game *game)
+// {
+//     if (keycode == ESC)
+//         exit_game(game);
+//     else if (keycode == RESET)
+//         reset_game(game);
+//     else if (!game->game_over && (keycode == LEFT || keycode == RIGHT || keycode == DOWN || keycode == UP))
+//     {
+//         int dx = (keycode == LEFT ? -1 : (keycode == RIGHT ? 1 : 0));
+//         int dy = (keycode == UP ? -1 : (keycode == DOWN ? 1 : 0));
+//         game->player.attempt.x = game->player.current.x + dx;
+//         game->player.attempt.y = game->player.current.y + dy;
+//         if (game->table[game->player.attempt.y][game->player.attempt.x] != WALL)
+//         {
+//             move(game);
+//             move_enemies(game);
+//         }
+//         else
+//         {
+//             game->player.attempt.x = game->player.current.x;
+//             game->player.attempt.y = game->player.current.y;
+//         }
+//     }
+//     return 0;
+// }
