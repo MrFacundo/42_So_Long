@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:57 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/22 17:16:04 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/23 22:13:16 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_map_rows(char *map_file_path, t_game *game)
 	}
 	close(fd);
 	if (game->map.rows < 3)
-		handle_error(game, MAP_ROWS);
+		handle_error(game, MAP_LIMITS);
 }
 
 /* Perform checks on each row and sets game variables */

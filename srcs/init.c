@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/22 17:08:55 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/23 22:07:14 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,6 @@ void	init_program(t_game *game)
 	game->map.rows = 0;
 	game->map.player_count = 0;
 	game->map.enemy_count = 0;
-}
-
-/* Initializes game contect variables, renders images
-	and hooks key input to mlx_loop */
-void	init_game(t_game *game)
-{
-	game->player.collected = 0;
-	game->player.moves = 0;
-	game->game_over = 0;
-	init_enemies(game);
-	render_map(game);
-	mlx_key_hook(game->window.win_ptr, handle_key, game);
-	mlx_loop(game->mlx_ptr);
 }
 
 /* Creates window pointer and hooks ESC key input to mlx_hook */

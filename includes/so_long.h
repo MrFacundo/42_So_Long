@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/22 16:10:19 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/23 22:13:17 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define RIGHT 100
 # define UP 119
 # define DOWN 115
-# define RESET 102
+# define RESET1 102
+# define RESET2 114
 
 // map elements
 # define FLOOR '0'
@@ -42,7 +43,6 @@
 # define BAD_ELEMENTS "One player, one exit, at least one collectable m8"
 # define MALLOC_ERROR "Malloc error m8"
 # define MAP_SHAPE "Map's all weird wtf"
-# define MAP_ROWS "Min 3 rows m8"
 # define MAP_CHAR "Strange chars in map m8"
 # define MAP_LIMITS "Map borders are all wrong m8"
 # define BAD_PATH "No valid path to exit m8"
@@ -51,7 +51,7 @@
 // game messages
 # define WIN_MSG "You win!"
 # define LOSE_MSG "Game Over"
-# define RESET_MSG_1 "Press F to restart"
+# define RESET_MSG_1 "Press R to restart"
 # define RESET_MSG_2 "Press F to pay respects"
 
 // colors
@@ -133,12 +133,17 @@ void		init_game(t_game *game);
 t_window	init_window(t_game program, char *name);
 void		init_program(t_game *program);
 void		init_table(char *map_file, t_game *program);
+
+// init_images.c
 void		init_images(t_game *program);
+
+// key_input.c
+int			handle_key(int keycode, t_game *game);
+void		move_player(t_game *game);
+void		animate(t_game *game);
 
 // main.c
 int			main(int argc, char **argv);
-int			handle_key(int keycode, t_game *game);
-void		move(t_game *game);
 void		reset_game(t_game *game);
 int			exit_game(t_game *program);
 
@@ -152,8 +157,9 @@ void		check_row(char *row, int row_number, t_game *program);
 // render.c
 void		render_map(t_game *program);
 void		render_counters(t_game *program);
+
+// render_game_over.c
 void		render_game_over_message(t_game *g, int condition);
-void		animate(t_game *game);
 
 // utils.c
 void		free_table(char ***tab);
@@ -174,9 +180,8 @@ void		print_table(char **table_ptr);
 void		print_map_validation(t_game *program);
 
 // enemy.c
-void	init_enemies(t_game *game);
-int		reset_enemy_position(t_game *g, int i, int j, int k);
-void	move_enemies(t_game *g);
-
+void		init_enemies(t_game *game);
+int			reset_enemy_position(t_game *g, int i, int j, int k);
+void		move_enemies(t_game *g);
 
 #endif

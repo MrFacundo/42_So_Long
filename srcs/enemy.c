@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 17:33:06 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/22 16:58:03 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/23 22:41:22 by facu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	move_enemies(t_game *g)
 	t_enemy	enemy;
 
 	i = -1;
+	if (g->player.moves % 3 == 0)
+		return ;
 	while (++i < g->map.enemy_count)
 	{
 		enemy = g->enemies[i];
@@ -47,6 +49,8 @@ void	init_enemies(t_game *game)
 {
 	t_enemy	*enemies;
 
+	if (!game->map.enemy_count)
+		return ;
 	enemies = ft_calloc(game->map.enemy_count, sizeof(t_enemy));
 	if (!enemies)
 		handle_error(game, MALLOC_ERROR);
