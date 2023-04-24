@@ -8,7 +8,7 @@
 
 <p align="center">
 	<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/MrFacundo/42_So_Long?color=lightblue" />
-	<img alt="Number of lines of code" src="https://img.shields.io/tokei/lines/github/MrFacundo/42_So_Long?color=critical" />
+	<!-- <img alt="Number of lines of code" src="https://img.shields.io/tokei/lines/github/MrFacundo/42_So_Long?color=critical" /> -->
 	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/MrFacundo/42_So_Long?color=blue" />
 	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/MrFacundo/42_So_Long?color=green" />
 </p>
@@ -19,6 +19,15 @@ The aim of this project is learn the basics of graphic management, how to place 
 
 This project uses the [MiniLibX](https://github.com/42Paris/minilibx-linux) graphical library to create a small 2D game where players have to pick up collectables and go to the exit.
 
+
+<p align="center">
+  <img src="./screenshot2.png">
+</p>
+
+<p align="center">
+  <img src="./screenshot1.png">
+</p>
+
 ### Allowed External Functions
 
 open, close, read, write,
@@ -27,3 +36,4 @@ strerror, exit
 
 ## Subject
 [📗️](en.subject.pdf) 
+
