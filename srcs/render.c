@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:12 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/23 22:05:57 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	render_map_element(t_game *g, int i, int j, int *enemy_i)
 	else if (g->table[i][j] == ENEMY)
 	{
 		(*enemy_i)++;
-		printf("enemy_i: %d\n", *enemy_i);
 		reset_enemy_position(g, i, j, *enemy_i);
 		f(g->mlx_ptr, g->window.win_ptr, g->images.enemy, x, y);
 	}

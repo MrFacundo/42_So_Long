@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:48:24 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/22 17:16:35 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	free_table(char ***tab_ptr)
 	int		i;
 
 	tab = *tab_ptr;
-	printf("freeing table\n");
 	i = 0;
 	if (!tab)
 		return ;

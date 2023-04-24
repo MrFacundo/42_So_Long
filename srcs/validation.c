@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:49:03 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/22 16:17:37 by ftroiter         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	validate_arg(int argc, char *argv, t_game *game)
 		handle_error(game, BAD_EXTENSION);
 	if (!map_is_valid(argv, game))
 		handle_error(game, BAD_ELEMENTS);
-	print_map_validation(game);
 	init_table(argv, game);
 	copy_table(game->table, &game->table_copy);
 	if (!paths_are_valid(game))
@@ -36,7 +35,6 @@ int	extension_is_valid(char *map_file_path)
 	char	*extension;
 
 	extension = ft_strrchr(map_file_path, '.');
-	printf("extension: %s\n", extension);
 	if (!extension || ft_strncmp(extension, ".ber", 4))
 		return (0);
 	return (1);
@@ -83,8 +81,6 @@ int	paths_are_valid(t_game *game)
 	requirements[1] = 0;
 	flood_fill(game->table_copy, y, x, requirements);
 	free_table(&game->table_copy);
-	printf("requirements[0]: %d\n", requirements[0]);
-	printf("requirements[1]: %d\n", requirements[1]);
 	if (!requirements[0] || requirements[1] != game->map.collectable_count)
 		return (0);
 	return (1);

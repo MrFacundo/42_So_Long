@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 21:49:24 by facu              #+#    #+#             */
-/*   Updated: 2023/04/24 11:20:47 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	handle_movement_key(int keycode, t_game *game)
 /* Input management. Called each time a key is pressed. */
 int	handle_key(int keycode, t_game *game)
 {
-	printf("keycode %d", keycode);
 	if (keycode == ESC)
 		exit_game(game);
 	else if (keycode == RESET1 || keycode == RESET2)
@@ -55,8 +54,6 @@ int	handle_key(int keycode, t_game *game)
 /* Move the player to the next position. */
 void	move_player(t_game *g)
 {	
-	printf("move table %p\n", g->table);
-	print_table(g->table);
 	if (g->table[g->player.attempt.y][g->player.attempt.x] == COLL)
 		g->player.collected += 1;
 	else if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT

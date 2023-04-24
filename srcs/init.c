@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/24 16:22:49 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,4 @@ void	init_table(char *map_file, t_game *game)
 		table[++i] = ft_get_next_line(fd);
 	close(fd);
 	game->table = table;
-	printf("init table %p\n", game->table);
-	print_table(game->table);
 }

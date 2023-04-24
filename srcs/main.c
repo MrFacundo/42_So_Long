@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/24 16:22:49 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	init_game(t_game *game)
 /* Clears the window, resets the table and re-initializes the game. */
 void	reset_game(t_game *game)
 {
-	printf("reset game\n");
 	mlx_clear_window(game->mlx_ptr, game->window.win_ptr);
 	free_table(&game->table);
 	copy_table(game->table_copy, &game->table);
@@ -62,7 +61,6 @@ void	destroy_images(t_game *game)
 /* Frees memory and exits the program. */
 int	exit_game(t_game *game)
 {
-	printf("closing...\n");
 	if (game->table)
 		free_table(&game->table);
 	if (game->table_copy)

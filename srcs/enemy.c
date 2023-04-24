@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 17:33:06 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/23 22:41:22 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ int	reset_enemy_position(t_game *game, int i, int j, int k)
 {
 	game->enemies[k].current.y = i;
 	game->enemies[k].current.x = j;
-	printf("enemy %d position reset to %d, %d\n", k, i, j);
 	return (1);
 }

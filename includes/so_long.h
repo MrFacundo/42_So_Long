@@ -6,7 +6,7 @@
 /*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/24 16:22:49 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define SO_LONG_H
 
 # include <unistd.h> // read, close
-# include <stdio.h>	// printf
 # include <stdlib.h> // malloc, exit
 # include <fcntl.h>	// O_RDONLY
 # include <errno.h>	// errno
@@ -175,10 +174,6 @@ int			extension_is_valid(char *map_file_path);
 int			map_is_valid(char *map_file_path, t_game *program);
 int			paths_are_valid(t_game *game);
 int			flood_fill(char **table, int y, int x, int *requirements);
-
-// debug.c
-void		print_table(char **table_ptr);
-void		print_map_validation(t_game *program);
 
 // enemy.c
 void		init_enemies(t_game *game);
