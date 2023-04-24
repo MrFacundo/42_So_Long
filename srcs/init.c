@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:47:27 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/23 22:07:14 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/24 16:22:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../includes/so_long.h"
 
 /* Initializes variables needed for validation and first render */
-void	init_program(t_game *game)
+void	init_program_data(t_game *game)
 {
 	game->window.win_ptr = 0;
 	game->mlx_ptr = 0;
@@ -23,7 +23,7 @@ void	init_program(t_game *game)
 	game->table = 0;
 	game->table_copy = 0;
 	game->enemies = 0;
-	game->image_load_success = 0;
+	game->images_initialized = 0;
 	game->map.diff = 0;
 	game->map.collectable_count = 0;
 	game->map.exit_count = 0;

@@ -55,6 +55,12 @@ show:
 		@printf "LFLAGS	: $(LFLAGS)\n"
 		@printf "SOURCES	: $(SOURCES)\n"
 
+restart: all
+		./so_long maps/map_4.ber
+
+valgrind: all
+		 valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all -s ./so_long maps/map_4.ber
+
 doadance:
 		@echo "\033[33;1m8====D\033[0m"
 		@sleep 0.5
@@ -62,10 +68,6 @@ doadance:
 		@sleep 0.5
 		@echo "\033[33;1m8===D  ~~~\033[0m\033[33;1m\o/\o/\033[0m"
 
-
-restart: all
-		./so_long maps/map_1.ber
-
 re: fclean all
 
-.PHONY: all bonus minilibx libft clean fclean re
+.PHONY: all minilibx libft clean fclean re restart valgrind doadance kill show

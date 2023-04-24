@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 21:49:24 by facu              #+#    #+#             */
-/*   Updated: 2023/04/23 22:41:56 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/24 11:20:47 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,12 @@ void	move_player(t_game *g)
 	print_table(g->table);
 	if (g->table[g->player.attempt.y][g->player.attempt.x] == COLL)
 		g->player.collected += 1;
-	else if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT)
+	else if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT
+			|| g->table[g->player.attempt.y][g->player.attempt.x] == ENEMY)
 	{
-		render_game_over_message(g, 1);
-		return ;
-	}
-	else if (g->table[g->player.attempt.y][g->player.attempt.x] == ENEMY)
-	{
-		render_game_over_message(g, 0);
+		g->game_over = 1;
+		render_game_over_message(g);
+		render_counters(g);
 		return ;
 	}
 	g->player.moves += 1;

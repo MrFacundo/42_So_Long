@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:21:31 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/23 22:13:17 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/24 16:22:49 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_img_ptrs
 	void	*enemy;
 	void	*enemy1;
 	void	*enemy2;
+	void	**all_ptrs[8];
 }	t_img_ptrs;
 
 typedef struct s_game
@@ -117,7 +118,7 @@ typedef struct s_game
 	t_window	window;
 	t_map		map;
 	t_img_ptrs	images;
-	int			image_load_success;
+	int			images_initialized;
 	char		**table;
 	char		**table_copy;
 	char		**table_copy2;
@@ -131,7 +132,7 @@ typedef struct s_game
 // init.c
 void		init_game(t_game *game);
 t_window	init_window(t_game program, char *name);
-void		init_program(t_game *program);
+void		init_program_data(t_game *program);
 void		init_table(char *map_file, t_game *program);
 
 // init_images.c
@@ -159,7 +160,7 @@ void		render_map(t_game *program);
 void		render_counters(t_game *program);
 
 // render_game_over.c
-void		render_game_over_message(t_game *g, int condition);
+void		render_game_over_message(t_game *g);
 
 // utils.c
 void		free_table(char ***tab);

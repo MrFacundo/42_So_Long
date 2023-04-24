@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_game_over.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facu <facu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 22:05:19 by facu              #+#    #+#             */
-/*   Updated: 2023/04/23 22:05:55 by facu             ###   ########.fr       */
+/*   Updated: 2023/04/24 11:17:11 by facundo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	render_lose_message(t_game *g)
 /* Uses mlx_string_put() and mlx_put_image_to_window()
 	to render a game over screen. The screen varies
 	depending on how many collectibles were collected */
-void	render_game_over_message(t_game *g, int condition)
+void	render_game_over_message(t_game *g)
 {
-	g->game_over = 1;
 	mlx_clear_window(g->mlx_ptr, g->window.win_ptr);
-	if (condition == 1 && g->player.collected == g->map.collectable_count)
+	if (g->table[g->player.attempt.y][g->player.attempt.x] == EXIT
+		&& g->player.collected == g->map.collectable_count)
 		render_win_message(g);
 	else
 		render_lose_message(g);
