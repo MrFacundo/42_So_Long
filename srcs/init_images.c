@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_images.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 17:08:24 by ftroiter          #+#    #+#             */
-/*   Updated: 2023/04/24 16:27:15 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/25 20:24:52 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ static int	init_img_array(t_game *g)
 	g->images.all_ptrs[3] = g->images.player1;
 	g->images.all_ptrs[4] = g->images.player2;
 	g->images.all_ptrs[5] = g->images.player3;
-	g->images.all_ptrs[6] = g->images.enemy1;
-	g->images.all_ptrs[7] = g->images.enemy2;
+	g->images.all_ptrs[6] = g->images.player_end;
+	g->images.all_ptrs[7] = g->images.enemy1;
+	g->images.all_ptrs[8] = g->images.enemy2;
 	return (0);
 }
 

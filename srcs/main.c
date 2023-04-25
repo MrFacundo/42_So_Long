@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: facundo <facundo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ftroiter <ftroiter@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:28:22 by facundo           #+#    #+#             */
-/*   Updated: 2023/04/24 16:45:49 by facundo          ###   ########.fr       */
+/*   Updated: 2023/04/25 20:19:15 by ftroiter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	destroy_images(t_game *game)
 	int	i;
 
 	i = -1;
-	while (++i < 8)
+	while (++i <= 8)
 		mlx_destroy_image(game->mlx_ptr, game->images.all_ptrs[i]);
 }
 
